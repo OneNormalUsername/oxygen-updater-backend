@@ -1,0 +1,15 @@
+{
+    "name": "arjanvlek/oxygen-updater-website",
+    "description": "Website for the Oxygen Updater app",
+    "type": "project",
+    "require": {
+        "ezyang/htmlpurifier": "^4.9"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Arjan Vlek",
+            "email": "arjan.vlek.dev@gmail.com"
+        }
+    ]
+}

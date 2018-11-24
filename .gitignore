@@ -1,0 +1,7 @@
+/.idea
+*.lock
+composer.phar
+~*.docx
+Thumbs.db
+desktop.ini
+.DS_Store

@@ -1,0 +1,206 @@
+
+/* Link text style */
+a:link:not(.font-white) {
+    color: #EB0028 !important;
+}
+
+a:hover:not(.font-white) {
+    color: #BB0028 !important;
+}
+
+a:visited:not(.font-white) {
+    color: #CB0028 !important;
+}
+
+a:visited {
+    background-color: #EB0028;
+}
+
+.active a:link:not(.font-white) {
+    font-weight: bold;
+}
+
+.active a:hover:not(.font-white) {
+    font-weight: bold;
+}
+
+.active a:visited:not(.font-white) {
+    font-weight: bold;
+}
+
+
+
+
+/* Desktop css */
+@media (min-width: 768px) {
+    .navbar-collapse.collapse {
+        display: inline-block !important;
+    }
+
+    .navbar-header {
+        display: inline-block;
+        float: none;
+        vertical-align: top;
+    }
+
+    .navbar-nav {
+        display: inline-block !important;
+        float: none !important;
+        vertical-align: top !important;
+    }
+
+    .navbar-collapse {
+        text-align: center !important;
+    }
+
+    .max-height {
+        max-height: 630px;
+        overflow-y: auto;
+    }
+}
+
+/* Mobile css */
+@media (max-width: 767px) {
+    .navbar-brand {
+        float: none;
+        display: inherit;
+    }
+}
+
+/* Navbar css */
+
+nav {
+    background-color: #EB0028;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+    opacity: 1;
+}
+
+.nav > li > a:focus, .nav > li > a:link {
+    background-color: #EB0028;
+}
+
+.nav > li > a:focus, .nav > li > a:hover {
+    background-color: #FF0028;
+}
+
+.navbar-toggle > .icon-bar {
+    background-color: white;
+}
+
+.navbar-brand:hover {
+    background-color: #FF0028;
+}
+
+.navbar-toggle .icon-bar {
+    background-color: #cccccc;
+}
+
+
+.logo {
+    width: 47px;
+    margin-left:15px;
+}
+
+body > div:first-of-type {
+    margin-top: 50px;
+}
+
+/* Media items css */
+
+.thumbnail {
+    border: none;
+    background-color: whitesmoke;
+}
+
+.grey-box > h2 {
+    font-weight: bold;
+}
+
+.caption > h3 {
+    font-weight: bold;
+}
+
+.media-heading {
+    font-weight: bold;
+}
+
+
+.grey-box {
+    background-color: whitesmoke;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.background-black {
+    background-color: black;
+}
+
+.background-white {
+    background-color: white;
+}
+
+.background-whitesmoke {
+    background-color: whitesmoke;
+}
+
+.m-t-20 {
+    margin-top: 20px;
+}
+
+.float-left {
+    float:left;
+}
+
+.float-right {
+    float:right;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.display-block {
+    display: block;
+}
+
+.m-b-0 {
+    margin-bottom: 0;
+}
+
+.p-l-10 {
+    padding-left: 10px;
+}
+
+.p-r-10 {
+    padding-right: 10px;
+}
+
+.p-l-15 {
+    padding-left: 15px;
+}
+
+.p-r-15 {
+    padding-right: 15px;
+}
+
+.cursor-hand {
+    cursor: pointer !important;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.font-red {
+    color: red;
+}
+
+.font-white {
+    color:white !important;
+}
+
+
+

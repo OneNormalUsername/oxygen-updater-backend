@@ -1,0 +1,49 @@
+version: '3'
+services:
+    php-apache:
+        image: php:7.2.12-apache
+        container_name: oxygen_updater_backend
+        build:
+            context: ./docker-support
+        ports:
+            - 8000:80
+        volumes:
+            - ./:/var/www/html:z
+        links:
+            - 'mariadb'
+        environment:
+            DATABASE_HOST: "mariadb"
+            DATABASE_USER: "root"
+            DATABASE_PASS: "test1234"
+            DATABASE_NAME: "oxygen_updater"
+    mariadb:
+        image: mariadb:10.2
+        container_name: oxygen_updater_database
+        volumes:
+            - mariadb:/var/lib/mysql
+            - ./database.sql:/docker-entrypoint-initdb.d/dump.sql
+        ports:
+            - 3306:3306
+        environment:
+            TZ: "Europe/Amsterdam"
+            MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+            MYSQL_ROOT_PASSWORD: "test1234"
+            MYSQL_USER: 'oxygen-updater'
+            MYSQL_PASSWORD: 'be-the-first-to-update'
+            MYSQL_DATABASE: 'oxygen_updater'
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: oxygen_updater_phpmyadmin
+        links:
+            - mariadb
+        ports:
+            - 8183:80
+        environment:
+            PMA_HOST: mariadb
+            PMA_USER: root
+            PMA_PASSWORD: test1234
+            PMA_ARBITRARY: 1
+
+
+volumes:
+    mariadb:

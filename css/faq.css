@@ -1,0 +1,68 @@
+.faqHeader {
+    font-size: 27px;
+    margin: 20px;
+}
+
+body {
+    background-color: whitesmoke;
+}
+
+.table-borderless td, .table-borderless th {
+    border: none !important;
+}
+
+.table-borderless table {
+    border-collapse: collapse;
+    display: inline;
+}
+
+.icon-important:before {
+    margin-right:10px;
+    content: "\e101"; /* "!" glyphicon*/
+    color: white;
+}
+
+p.word-break {
+    word-wrap: break-word;
+}
+
+.panel {
+    border-color: #EB0028 !important;
+    border-radius: 2px !important;
+}
+
+.panel-heading {
+    border-top-left-radius: 1px !important;
+    border-top-right-radius: 1px !important;
+    background-color: #EB0028 !important;
+}
+
+.well {
+    background-color: whitesmoke !important;
+    border: none;
+}
+
+.panel-default [data-toggle="collapse"] {
+    cursor: pointer;
+}
+.toggle-glyphicon:not(.collapsed):before {
+    content: "\e113"; /* up arrow glyphicon */
+}
+
+.toggle-glyphicon.collapsed:before {
+    content: "\e114"; /* down arrow glyphicon */
+}
+
+/*Bug fix for iOS devices for enabling tooltips on icons*/
+.btn-text {
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
+
+.faq-table {
+    display: inline;
+    float:right
+}

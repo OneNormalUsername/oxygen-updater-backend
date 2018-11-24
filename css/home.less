@@ -1,0 +1,209 @@
+// Variables
+@darker-red-color: #BB0028 !important;
+@red-color: #EB0028 !important;
+@grey-background: rgb(160, 160, 160);
+
+// Custom font
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+// Main row style
+.background-darker-grey {
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-color: @grey-background;
+}
+
+.lighter-grey-box {
+    background-color: lighten(@grey-background, 10%);
+    border: 1px solid darken(@grey-background, 10%);
+}
+
+.feature-padding {
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.full-width-table {
+    border: none;
+    width: 100%
+}
+
+// Screenshot style
+.shadow {
+    /*http://thenewcode.com/600/Creating-a-True-CrossBrowser-Drop-Shadow-Effect-With-CSS3-&-SVG*/
+    -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=0, OffY=0, Color='#FFFFFF')";
+    filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=0, OffY=0, Color='#FFFFFF')";
+    filter: url(../img/shadow.svg);
+    -webkit-filter: drop-shadow(0px 0px 25px rgba(255,255,255,0.8));
+    filter: drop-shadow(0px 0px 25px rgba(255,255,255,0.8));
+}
+
+.transition (@transition) {
+    -webkit-transition: @transition;
+    -moz-transition:    @transition;
+    -ms-transition:     @transition;
+    -o-transition:      @transition;
+}
+
+.carousel {
+    .item {
+        .transition(.7s ease-in-out opacity);
+        left: 0 !important;
+    }
+    .next.left, .prev.right {
+        opacity: 1;
+        z-index: 1;
+    }
+    .active.left, .active.right {
+        opacity: 0;
+        z-index: 2;
+    }
+}
+
+.center-div {
+    display: block !important;
+    margin: auto !important;
+}
+
+.hr-full-width {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+
+// Resolution dependent styling
+
+
+// Very large screens: Extra large font and more margins around main text
+@media (min-width: 1600px) {
+    .feature-title {
+        text-align: center;
+        font-size: xx-large;
+        font-weight: bolder;
+        text-transform: uppercase;
+        color: @red-color;
+    }
+
+    .feature-text {
+        margin-top: 20px;
+        color: white;
+        font-weight: bold;
+        padding-left: 100px;
+        padding-right: 100px;
+        font-size: x-large;
+    }
+
+    .resizing-box {
+        min-height: 700px;
+    }
+}
+
+// Large screens: More margins around main text
+@media(min-width: 1350px) and (max-width: 1599px) {
+    .feature-text {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    .resizing-box {
+        min-height: 650px;
+    }
+}
+
+// Normal to large screens: More margins around main text
+@media(min-width: 1100px) and (max-width: 1349px) {
+    .feature-text {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    .resizing-box {
+        min-height: 550px;
+    }
+}
+
+// Normal to very large screens: Larger font of main text
+@media (min-width: 768px) and (max-width: 1599px) {
+    .feature-title {
+        text-align: center;
+        font-size: x-large;
+        font-weight: bolder;
+        text-transform: uppercase;
+        color: @red-color;
+    }
+
+    .feature-text {
+        margin-top: 20px;
+        color: white;
+        font-weight: bold;
+        font-size: large;
+    }
+}
+
+// All desktop screens: Padding in lighter box and image to the right of the screen.
+@media (min-width: 768px) {
+
+    @feature-padding-top: 50px;
+    @feature-padding-bottom: 50px;
+    @feature-padding-left: 55px;
+    @feature-padding-right: 50px;
+
+    .feature-box {
+        padding: @feature-padding-top @feature-padding-right @feature-padding-bottom @feature-padding-left;
+        height:100%;
+    }
+
+    .lighter-grey-box {
+        padding-top: 20px;
+        padding-left: 15px;
+        padding-right: 15px;
+        height:100%;
+    }
+
+    .carousel {
+        float: right;
+    }
+
+    .feature-image {
+        max-height: 800px;
+        padding-top: @feature-padding-top;
+        padding-bottom: @feature-padding-bottom;
+    }
+
+    .thumbnail {
+        min-height: 500px;
+    }
+}
+
+
+// Mobile screens: Margin above title, large screenshot below text.
+@media (max-width: 767px) {
+
+    .feature-title {
+        margin-top: 40px;
+        font-size: x-large;
+        font-weight: bolder;
+        text-transform: uppercase;
+        color: @red-color;
+    }
+
+    .feature-text {
+        text-align: center;
+        margin-top: 30px;
+        padding-left: 20px;
+        padding-right: 20px;
+        color: white;
+        font-weight: bold;
+        font-size: large;
+    }
+
+    .feature-image {
+        max-height: 100vh;
+        display: block;
+        margin: auto;
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+}
