@@ -15,7 +15,10 @@ This repository does *not* contain:
 ## Running / building it
 
 ### Docker
-If you have Docker, run `docker-compose up` to launch everything at once.
+The easiest way to develop or host this project, is by using Docker. It launches everything that's needed to work on the full backend of the Oxygen Updater app.
+
+#### MacOS / Linux
+If you have Docker on your Mac or linux PC, just run `docker-compose up` to launch everything at once.
 That will launch the following:
 
 - The website is available at `localhost:8000`
@@ -24,8 +27,10 @@ That will launch the following:
 
 Also, a PHPMyAdmin is spawned at `localhost:8183` so you can perform operations on the database.
 
-Note: Windows users may need to use Docker Machine or Docker Toolbox, as the regular Docker requires Hyper-V and therfore cannot be used on the non-Pro Windows 10. 
+#### Windows
+Most Windows developers will have to use Docker Machine, as the regular Docker requires Hyper-V and therfore cannot be used on the non-Pro Windows 10. 
 Also, the regular Docker for Windows does not work together with the Android emulator.
+You can get Docker Machine by following the instructions found on https://docs.docker.com/toolbox/. Docker Toolbox contains Docker Machine. Make sure that Docker Compose for Windows is checked during setup.
 
 ### No Docker
 If you do *not* have Docker, you'll need a "LAMP server" or "WAMP server" application.
