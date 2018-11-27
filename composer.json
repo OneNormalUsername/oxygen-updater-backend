@@ -3,7 +3,9 @@
     "description": "Website for the Oxygen Updater app",
     "type": "project",
     "require": {
-        "ezyang/htmlpurifier": "^4.9"
+        "ezyang/htmlpurifier": "4.9.3",
+        "ext-pdo": "*",
+        "ext-json": "*"
     },
     "license": "MIT",
     "authors": [
