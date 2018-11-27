@@ -4,7 +4,7 @@ services:
         image: php:7.2.12-apache
         container_name: oxygen_updater_backend
         build:
-            context: ./docker-support
+            context: ./
         ports:
             - 8000:80
         volumes:
