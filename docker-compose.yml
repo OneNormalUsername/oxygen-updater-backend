@@ -16,6 +16,14 @@ services:
             DATABASE_USER: "root"
             DATABASE_PASS: "test1234"
             DATABASE_NAME: "oxygen_updater"
+
+    composer:
+      restart: 'no'
+      image: composer:1.7.3
+      command: composer install
+      volumes:
+       - $PWD:/app
+
     mariadb:
         image: mariadb:10.2
         container_name: oxygen_updater_database

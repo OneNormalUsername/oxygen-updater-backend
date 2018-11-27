@@ -6,3 +6,4 @@ composer.phar
 Thumbs.db
 desktop.ini
 .DS_Store
+vendor
