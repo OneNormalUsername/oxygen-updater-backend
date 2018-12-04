@@ -27,6 +27,7 @@ That will launch the following:
 - The website is available at `localhost:8000`
 - The FAQ pages are available at `localhost:8000/faq` and `localhost:8000/inappfaq`
 - The APIs are available at `localhost:8000/api` (current is /v2.3 but all previous versions are available as well)
+- A page containing info about the latest OS versions in the database and missing OS versions is available at `localhost:8000/os-version-info`
 
 Also, a PHPMyAdmin is spawned at `localhost:8183` so you can perform operations on the database.
 
