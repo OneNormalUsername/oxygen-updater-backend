@@ -122,7 +122,7 @@ $db = null;
 
 <!-- Latest OS versions widget -->
 <div class="row" style="margin-top: 25px;">
-    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h2 style="font-weight: bold;" class="panel-title">Latest OxygenOS versions available in the app</h2>
@@ -156,7 +156,7 @@ $db = null;
 
 <!-- Missing OS versions widget -->
 <div class="row" style="margin-top: 25px;">
-    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h2 style="font-weight: bold;" class="panel-title">OxygenOS versions which are missing in the app</h2>
