@@ -17,31 +17,25 @@ if($device_id != null && $update_method_id != null && $device_id != "" && $updat
     $databaseConnector = new DatabaseConnector();
     $database = $databaseConnector->connectToDb();
 
-    // Log the used operating system version.
-    $previouslyLoggedOperatingSystemVersionQuery = $database->prepare("SELECT * FROM used_operating_system_version where operating_system_version = :operating_system_version order by id limit 1");
-    $previouslyLoggedOperatingSystemVersionQuery->bindParam(':operating_system_version', $parent_version_number);
-    $previouslyLoggedOperatingSystemVersionQuery->execute();
+    // Log the used operating system version (only when using the app).
+    if (strpos($_SERVER['HTTP_USER_AGENT'], 'Oxygen_updater_') !== FALSE) {
+        $previouslyLoggedOperatingSystemVersionQuery = $database->prepare("SELECT * FROM used_operating_system_version where operating_system_version = :operating_system_version order by id limit 1");
+        $previouslyLoggedOperatingSystemVersionQuery->bindParam(':operating_system_version', $parent_version_number);
+        $previouslyLoggedOperatingSystemVersionQuery->execute();
 
-    // If it has never been logged before, create a new log entry.
-    if ($previouslyLoggedOperatingSystemVersionQuery->rowCount() == 0) {
-        $logOperatingSystemVersionQuery = $database->prepare("INSERT INTO used_operating_system_version(operating_system_version, times_logged) VALUES (:operating_system_version, 1)");
-        $logOperatingSystemVersionQuery->bindParam(':operating_system_version', $parent_version_number);
-        $logOperatingSystemVersionQuery->execute();
-    } else {
-        // Else, increment the usage count of the existing log entry.
-        $incrementOperatingSystemVersionUsageQuery = $database->prepare("UPDATE used_operating_system_version SET times_logged = times_logged + 1 where operating_system_version = :operating_system_version");
-        $incrementOperatingSystemVersionUsageQuery->bindParam(':operating_system_version', $parent_version_number);
-        $incrementOperatingSystemVersionUsageQuery->execute();
+        // If it has never been logged before, create a new log entry.
+        if ($previouslyLoggedOperatingSystemVersionQuery->rowCount() == 0) {
+            $logOperatingSystemVersionQuery = $database->prepare("INSERT INTO used_operating_system_version(operating_system_version, times_logged) VALUES (:operating_system_version, 1)");
+            $logOperatingSystemVersionQuery->bindParam(':operating_system_version', $parent_version_number);
+            $logOperatingSystemVersionQuery->execute();
+        } else {
+            // Else, increment the usage count of the existing log entry.
+            $incrementOperatingSystemVersionUsageQuery = $database->prepare("UPDATE used_operating_system_version SET times_logged = times_logged + 1 where operating_system_version = :operating_system_version");
+            $incrementOperatingSystemVersionUsageQuery->bindParam(':operating_system_version', $parent_version_number);
+            $incrementOperatingSystemVersionUsageQuery->execute();
+        }
     }
-
-
-    // Test if the update method uses the new Incremental (parent) system or not.
-    $updateMethodQuery = $database->prepare("SELECT * FROM update_method WHERE id = :update_method_id");
-    $updateMethodQuery->bindParam(':update_method_id', $update_method_id);
-    $updateMethodQuery->execute();
-
-    $updateMethod = $updateMethodQuery->fetch(PDO::FETCH_ASSOC);
-
+    
     // Find update data
     $query = $database->prepare("SELECT * FROM update_data WHERE device_id = :device_id AND update_method_id = :update_method_id AND parent_version_number = :parent_version_number");
     $query->bindParam(':device_id', $device_id);
