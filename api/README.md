@@ -38,22 +38,23 @@ Response: <Array of>
     - Value: `"0"` when not possible, `"1"` when possible
     
     
-#### GET /updateData/{deviceId}/{updateMethodId}/{baseVersion}
-Returns whether a system update is available for a given device, using a given update method and currently using a specific `baseVersion`
+#### GET /updateData/{deviceId}/{updateMethodId}/{currentVersion}
+Returns whether a new system update is available for a given device, using a given update method and using a `currentVersion`
 
 Request parameters: 
   - `deviceId`: Database ID of the device
   - `updateMethodId`: Database ID of the update method to check for
-  - `baseVersion`: OS version currently installed on the phone (e.g. `OnePlus6TOxygen_34.O.11_GLO_011_1811032137`).
+  - `currentVersion`: OS version currently installed on the phone (e.g. `OnePlus6TOxygen_34.O.11_GLO_011_1811032137`).
   
 Response:
-If no update is available: 
+
+If no new system update is available: 
   - `information`: `unable to find a more recent build` (default message)
   - `update_information_available`: Whether any update information is available at all (as in: is it possible to call `/mostRecentUpdateData` for this device / update method combo)
   - `system_is_up_to_date`: `true` (control logic for the app, shouldn't have been in here...)
   
   
-If a system update is available:  
+If a new system update is available:  
   - `id`: Database ID of the update details
   - `device_id`: Database ID of the device (same as in request)
   - `update_method_id`: Database ID of the update method (same as in request)
@@ -79,8 +80,9 @@ Request parameters:
   - `updateMethodId`: Database ID of the update method
   
 Response:
+
 When **no** update data is present for the given device / update method:
-  - `error`: `unable to find most recent update data` (error code)
+  - `error`: `unable to find most recent update data` (standard error code)
   - `update_information_available`: `false` (control logic for app...)
   - `system_is_up_to_date`: `false` (control logic for app...)
 
@@ -98,8 +100,8 @@ When some update data is present for the given device / update method:
   - `filename`: File name of the update package
   - `inserted_by_automator`: Whether this update was imported from the OnePlus API (`'1'`) or manually added by the community (`'0'`)
   - `is_latest_version`: Whether this update is the latest version (when `"1"`, it gets returned when calling `/mostRecentUpdateData`. see below)
-  - `update_information_available`: `true`
-  - `system_is_up_to_date`: `true`
+  - `update_information_available`: `true` (control logic for app...)
+  - `system_is_up_to_date`: `true` (control logic for app...)
   
 ## Developing
 
