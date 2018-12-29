@@ -67,7 +67,7 @@ $contents["NEWS_TITLE"] = "Stay informed about OnePlus / OxygenOS";
 $contents["NEWS_TEXT"] = "Never miss out on the latest news about OnePlus and OxygenOS. The News section of Oxygen Updater covers new product announcements, tips and tricks and special events held by OnePlus. Come back regularly to stay up to date!";
 
 $contents["UPDATE_METHODS_TITLE"] = "Supports 3 update methods";
-$contents["UPDATE_METHODS_TEXT"] = "This app supports full, incremental and Community Edition updates. Save mobile data and storage space by using the incremental updates, or download the full updates if you want to update from an old version or have a rooted device.";
+$contents["UPDATE_METHODS_TEXT"] = "This app supports full, incremental and Open Beta updates. Save mobile data and storage space by using the incremental updates, or download the full updates if you want to update from an old version or have a rooted device.";
 
 $contents["FOOTER_DESCRIPTION"] = "An app to download system updates for OxygenOS devices faster.\nRequires a OnePlus device running OxygenOS.\n";
 $contents["FOOTER_DEVELOPED_BY"] = "Developed by:";
