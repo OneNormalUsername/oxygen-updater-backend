@@ -79,7 +79,7 @@ $contents["FOOTER_LEGAL_GOOGLE"] = "Google Play et le logo Google Play sont des 
 $contents["FAQ_PAGE_SUBTITLE"] = "Foire aux Questions";
 
 $contents["FAQ_IMPORTANT_EXPL_1"] = "Les items marqués avec";
-$contents["FAQ_IMPORTANT_EXPL_2"] = " .";
+$contents["FAQ_IMPORTANT_EXPL_2"] = " sont importants et devraient être lus.";
 
 // FAQ page: Retrieval of items
 $contents["FAQ_CATEGORY_NAME_DB_COLUMN"] = "french_category_name";
