@@ -14,60 +14,60 @@ $contents["FAQ"] = "FAQ";
 $contents["FAQ_PAGE_TITLE"] = "FAQ - Oxygen Updater";
 
 // Feature text next to (or above on mobile) the screenshots
-$contents["FEATURE_TITLE"] = "Be the first to update";
-$contents["FEATURE_TEXT"] = "<p>With Oxygen Updater, you'll receive OxygenOS system updates before anyone else.</p><p>Oxygen updater is a free and easy-to-use Android app.</p><p>You'll only need a supported OnePlus device running OxygenOS software.</p><p>Is your device up to date?</p>";
+$contents["FEATURE_TITLE"] = "Soyez le premier à mettre à jour";
+$contents["FEATURE_TEXT"] = "<p>Avec Oxygen Updater, vous recevrez les mises à jour d'Oxygen OS avant tout le monde.</p><p>Oxygen Updater est une application Android gratuite et facile d'utilisation.</p><p>Vous aurez seulement besoin d'un périphérique OnePlus supporté fonctionnant sous Oxygen OS.</p><p>Votre périphérique est-il à jour ?</p>";
 
 // Top-left column (carousel)
 $contents["CAROUSEL_IMAGE_TYPE"] = "EN";
-$contents["CAROUSEL_ALT_1"] = "See what's new in a system update, and download it.";
-$contents["CAROUSEL_ALT_2"] = "Read the installation instructions and install the update.";
-$contents["CAROUSEL_ALT_3"] = "Done. Your device is fully up-to-date!";
+$contents["CAROUSEL_ALT_1"] = "Regardez ce qu'il y a de nouveau dans la mise à jour et téléchargez-la.";
+$contents["CAROUSEL_ALT_2"] = "Lisez le guide d'installation et installez la mise à jour";
+$contents["CAROUSEL_ALT_3"] = "Fait. Votre périphérique est maintenant à jour !";
 
 // Top-right column (above devices)
-$contents["GET_IT_NOW"] = "Get It Now:";
+$contents["GET_IT_NOW"] = "Obtenez-la maintenant:";
 $contents["PLAY_BADGE_ALT"] = "Disponible sur Google Play";
 $contents["PLAY_BADGE_URL"] = "https://play.google.com/intl/fr_fr/badges/images/generic/fr_badge_web_generic.png";
 
 // Supported devices
-$contents["SUPPORTED_DEVICES_TITLE"] = "Supported devices: ";
-$contents["SUPPORTED_DEVICES_SCROLL"] = "Scroll down to view them all...";
-$contents["AND"] = "and";
+$contents["SUPPORTED_DEVICES_TITLE"] = "Périphériques supportés: ";
+$contents["SUPPORTED_DEVICES_SCROLL"] = "Faites défiler la page vers le bas afin de les voir tous ...";
+$contents["AND"] = "et";
 
 // Top row of features
 
-$contents["FEATURES_TITLE"] = "Features";
+$contents["FEATURES_TITLE"] = "Fonctionnalités";
 
-$contents["UPDATE_NOTIFICATIONS_ALT"] = "Update Notifications";
-$contents["UPDATE_NOTIFICATIONS_TITLE"] = "Update Notifications";
-$contents["UPDATE_NOTIFICATIONS_TEXT"] = "Be the first to know about new system updates. You'll receive a push notification when a new update has been released. Tap on it and start downloading it right away!";
+$contents["UPDATE_NOTIFICATIONS_ALT"] = "Notifications de mises à jour";
+$contents["UPDATE_NOTIFICATIONS_TITLE"] = "Notifications de mises à jour";
+$contents["UPDATE_NOTIFICATIONS_TEXT"] = "Soyez le premier à connaître l'existence de nouvelles mises à jour. Vous recevrez une notification push quand une nouvelle mise à jour sera publiée. Appuyez dessus pour lancer l'application et démarrer le téléchargement!";
 
-$contents["DOWNLOAD_SYSTEM_UPDATES_ALT"] = "Update Notifications";
-$contents["DOWNLOAD_SYSTEM_UPDATES_TITLE"] = "Download System Updates";
-$contents["DOWNLOAD_SYSTEM_UPDATES_TEXT"] = "Oxygen Updater allows you to download system updates directly from OnePlus. This ensures that your download proceeds as quickly as possible, and that the update file you download is completely original - It hasn't been modified with in any way.";
+$contents["DOWNLOAD_SYSTEM_UPDATES_ALT"] = "Notifications de mises à jour";
+$contents["DOWNLOAD_SYSTEM_UPDATES_TITLE"] = "Téléchargement de mises à jour";
+$contents["DOWNLOAD_SYSTEM_UPDATES_TEXT"] = "Oxygen Updater vous permet de télécharger les mises à jour directement depuis les serveurs de OnePlus. Cela permet de s'assurer que le téléchargement se fait aussi vite que possible et de s'assurer que le fichier de mise à jour est original et n'a pas été modifié.";
 
-$contents["INSTALL_SYSTEM_UPDATES_ALT"] = "Install System Updates";
-$contents["INSTALL_SYSTEM_UPDATES_TITLE"] = "Install System Updates";
-$contents["INSTALL_SYSTEM_UPDATES_TEXT"] = "Got root access? Installing your system update is as easy as tapping on a few buttons. <br>No root access? No worries. Oxygen Updater contains a comprehensive, easy-to-understand installation guide which assists you during the installation process.";
+$contents["INSTALL_SYSTEM_UPDATES_ALT"] = "Installe les mises à jour";
+$contents["INSTALL_SYSTEM_UPDATES_TITLE"] = "Installe les mises à jour";
+$contents["INSTALL_SYSTEM_UPDATES_TEXT"] = "Etes-vous rooté ? Installer les mises à jour est aussi facile que d'appuyer sur quelques boutons. <br>Vous ne l'êtes pas ? Ce n'est pas grave. Oxygen Updater contient un guide qui vous assistera pendant le processus d'installation.";
 
 // Smaller boxes with features, shown below the main features
-$contents["UPDATE_DESCRIPTIONS_ALT"] = "Update Descriptions";
-$contents["UPDATE_DESCRIPTIONS_TITLE"] = "Update Descriptions";
-$contents["UPDATE_DESCRIPTIONS_TEXT"] = "Read the update description to see what's new in a system update. Always handy to know before installing a new update, or afterwards if you're curious which features that update contained.";
+$contents["UPDATE_DESCRIPTIONS_ALT"] = "Description des mises à jour";
+$contents["UPDATE_DESCRIPTIONS_TITLE"] = "Description des mises à jour";
+$contents["UPDATE_DESCRIPTIONS_TEXT"] = "Lisez la description de la mise à jour pour connaître les nouveautés qu'elle apporte. Vous pouvez le faire avant de l'installer ou après si vous êtes curieux de savoir quelles fonctionallités ont été ajoutées.";
 $contents["UPDATE_DESCRIPTIONS_NOTE"] = "";
 
-$contents["DEVICE_INFORMATION_ALT"] = "View Device Information";
-$contents["DEVICE_INFORMATION_TITLE"] = "View Device Information";
-$contents["DEVICE_INFORMATION_TEXT"] = "Oxygen Updater allows you to view some of the specifications of your device. See which chipset your device has, the amount of internal memory your device has and which Android / OxygenOS versions you are currently using.";
+$contents["DEVICE_INFORMATION_ALT"] = "Connaître les caractéristiques de votre périphérique";
+$contents["DEVICE_INFORMATION_TITLE"] = "Connaître les caractéristiques de votre périphérique";
+$contents["DEVICE_INFORMATION_TEXT"] = "Oxygen Updater vous permet de connaître certaines caractéristiques de votre périphérique. Vous pouvez connaître quel chipset votre périphérique utilise, la quantité de RAM qu'il possède et savoir sous quelle version d'Android/Oxygen OS il fonctionne.";
 
-$contents["DEVICE_SUPPORT_TITLE"] = "Supports all OnePlus devices";
-$contents["DEVICE_SUPPORT_TEXT"] = "Oxygen Updater supports all devices sold by OnePlus. You will get a push notification when a new device is supported. You can disable the push notification if you don't want to get notified.";
+$contents["DEVICE_SUPPORT_TITLE"] = "Supporte tous les périphériques vendus par OnePlus";
+$contents["DEVICE_SUPPORT_TEXT"] = "Oxygen Updater supporte tous les périphériques vendus par OnePlus. Vous recevrez une notification push quand un nouveau périphérique sera supporté. Vous pouvez la désactiver si vous le souhaitez.";
 
-$contents["NEWS_ALT"] = "Stay informed about OnePlus / OxygenOS";
-$contents["NEWS_TITLE"] = "Stay informed about OnePlus / OxygenOS";
-$contents["NEWS_TEXT"] = "Never miss out on the latest news about OnePlus and OxygenOS. The News section of Oxygen Updater covers new product announcements, tips and tricks and special events held by OnePlus. Come back regularly to stay up to date!";
+$contents["NEWS_ALT"] = "Restez informés à propos de OnePlus / OxygenOS";
+$contents["NEWS_TITLE"] = "Restez informés à propos de OnePlus / OxygenOS";
+$contents["NEWS_TEXT"] = "Ne manquez aucune nouvelle information à propos de OnePlus et d'OxygenOS. La section Articles d'Oxygen Updater couvre les annonces de nouveaux produits, d'événements spéciaux organisés par OnePlus et contient des astuces. Vérifiez la régulièrement afin de rester à jour !";
 
-$contents["UPDATE_METHODS_TITLE"] = "Supports 3 update methods";
-$contents["UPDATE_METHODS_TEXT"] = "This app supports full, incremental and Community Edition updates. Save mobile data and storage space by using the incremental updates, or download the full updates if you want to update from an old version or have a rooted device.";
+$contents["UPDATE_METHODS_TITLE"] = "Supporte 3 méthodes de mises à jour";
+$contents["UPDATE_METHODS_TEXT"] = "Cette application supporte les méthodes de mise à jour incrémentales, complètes et Open Beta. Economisez de la bande passante et de l'espace de stockage en utilisant la méthode incrémentale ou téléchargez la mise à jour complète si vous voulez appliquer la mise à jour depuis une version plus ancienne ou avez un périphérique rooté.";
 
 $contents["FOOTER_DESCRIPTION"] = "Une application pour télécharger plus rapidement les mises à jour système pour les périphériques fonctionnant sous OxygenOS.\nRequière un périphérique OnePlus fonctionnant sous Oxygen OS.\n";
 $contents["FOOTER_DEVELOPED_BY"] = "Développée par:";
@@ -78,8 +78,8 @@ $contents["FOOTER_LEGAL_GOOGLE"] = "Google Play et le logo Google Play sont des 
 // FAQ page: Important items explanation
 $contents["FAQ_PAGE_SUBTITLE"] = "Foire aux Questions";
 
-$contents["FAQ_IMPORTANT_EXPL_1"] = "Items marked with ";
-$contents["FAQ_IMPORTANT_EXPL_2"] = " are important to read.";
+$contents["FAQ_IMPORTANT_EXPL_1"] = "Les items marqués avec";
+$contents["FAQ_IMPORTANT_EXPL_2"] = " .";
 
 // FAQ page: Retrieval of items
 $contents["FAQ_CATEGORY_NAME_DB_COLUMN"] = "french_category_name";
