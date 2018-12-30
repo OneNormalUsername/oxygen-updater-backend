@@ -65,7 +65,7 @@ $contents["NEWS_TITLE"] = "Blijf op de hoogte van het laatste nieuws";
 $contents["NEWS_TEXT"] = "Met Oxygen Updater blijf je op de hoogte van het laatste nieuws over OnePlus en OxygenOS. De Nieuws-sectie van Oxygen-Updater vertelt jou alles over nieuwe productaankondigingen, tips en trucs en speciale acties / evenementen die worden georganiseerd. Kijk regelmatig om op de hoogte te blijven!";
 
 $contents["UPDATE_METHODS_TITLE"] = "Ondersteunt 3 update-methodes";
-$contents["UPDATE_METHODS_TEXT"] = "Oxygen Updater ondersteunt zowel volledige, incrementele als Community Edition-updates. Bespaar mobiele gegevens en opslagruimte door voor de incrementele updates te kiezen, of kies voor de volledige updates indien je een apparaat met een oude of gerootte versie van OxygenOS wilt bijwerken.";
+$contents["UPDATE_METHODS_TEXT"] = "Oxygen Updater ondersteunt zowel volledige, incrementele als Open Bèta-updates. Bespaar mobiele gegevens en opslagruimte door voor de incrementele updates te kiezen, of kies voor de volledige updates indien je een apparaat met een oude of gerootte versie van OxygenOS wilt bijwerken.";
 
 // Footer text
 $contents["FOOTER_DESCRIPTION"] = "Een app om systeemupdates voor OxygenOS-gebaseerde apparaten sneller te downloaden.\nVereist een OnePlus-apparaat met OxygenOS.\n";
