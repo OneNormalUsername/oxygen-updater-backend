@@ -9,8 +9,10 @@ This repository contains the following:
 - Database schema as used by the test server (mariaDB), contains sample devices and update data.
 
 This repository does *not* contain:
-- Admin portal
-- Automatic update fetching scripts which were used to grab updates from OnePlus.
+- Admin portal (coming soon w/Docker)
+- News image uploader for admins (coming soon, needs a few security adjustments)
+- Real-time installation dashboard (my React.js sample project, may be added or maybe not)
+- Automatic update fetching scripts which were used to grab updates from OnePlus. (will never be added)
 
 ## Running / building it
 
