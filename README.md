@@ -52,7 +52,6 @@ If you do *not* have Docker, you'll need a "LAMP server" or "WAMP server" applic
 That contains a webserver, PHP and a mysql / mariadb database. You'll have to load `database.sql` in there and place all contents of the repository in the web root folder. Also make sure the Apache "Headers" and "Rewrite" modules are active, and that the PHP "JSON", "PDO" and "mysqli" modules are installed.
 
 ## Contributing
-If you send a PR, I will review it and if it is good it can be deployed to the official application server.
-
+See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 

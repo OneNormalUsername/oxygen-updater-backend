@@ -1,6 +1,6 @@
 <?php
-include '../shared/DatabaseConnector.php';
-include 'model/UpdateInstallation.php';
+include '../shared/database.php';
+include '../shared/UpdateInstallation.php';
 
 // Set the return type to JSON.
 header('Content-type: application/json');
@@ -24,7 +24,7 @@ try {
     die();
 }
 
-$database = (new DatabaseConnector())->connectToDb();
+$database = connectToDatabase();
 
 switch ($installation->getStatus()) {
     case "STARTED":

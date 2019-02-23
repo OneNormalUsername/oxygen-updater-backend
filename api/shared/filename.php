@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Returns the file name out of an URL. This is the part after the last slash, without any query parameters.
+ * @param $downloadUrl string URL to get the filename for
+ * @return string File name to use for this URL
+ */
 function getFilename($downloadUrl) {
     // Get everything after the last slash of the URL.
     $filenameParts = array();

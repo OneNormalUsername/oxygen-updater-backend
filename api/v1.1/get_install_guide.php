@@ -1,5 +1,5 @@
 <?php
-include 'Repository/DatabaseConnector.php';
+include '../shared/database.php';
 
 // Obtain all required request parameters.
 $device_id = $_GET["device_id"];
@@ -13,11 +13,9 @@ header('Content-type: application/json');
 if($device_id != null && $device_id != "" && $update_method_id != null && $update_method_id != "" && $page_number != null && $page_number != "") {
 
     // Connect to the database
-    $databaseConnector = new DatabaseConnector();
-    $database = $databaseConnector->connectToDb();
+    $database = connectToDatabase();
 
     // Fetch all update methods that are enabled for this device.
-
     $query = $database->prepare ("SELECT * FROM install_guide where device_id = :device_id AND update_method_id = :update_method_id AND page_number = :page_number AND is_custom_page = 1");
     $query->bindParam(':device_id', $device_id);
     $query->bindParam(':update_method_id', $update_method_id);

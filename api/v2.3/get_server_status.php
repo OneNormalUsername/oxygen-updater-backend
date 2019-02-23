@@ -1,9 +1,8 @@
 <?php
-include '../shared/DatabaseConnector.php';
+include '../shared/database.php';
 
 // Connect to the database
-$databaseConnector = new DatabaseConnector();
-$database = $databaseConnector->connectToDb();
+$database = connectToDatabase();
 
 // Execute the query
 $query = $database->query("SELECT status, latest_app_version, automatic_installation_enabled, push_notification_delay_seconds FROM server_status");

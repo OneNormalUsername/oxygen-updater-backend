@@ -1,6 +1,6 @@
 <?php
-include '../shared/DatabaseConnector.php';
-include '../shared/FilenameUtils.php';
+include '../shared/database.php';
+include '../shared/filename.php';
 
 // Obtain all required request parameters.
 $device_id = $_GET["device_id"];
@@ -14,8 +14,7 @@ header('Content-type: application/json');
 if($device_id != null && $update_method_id != null && $device_id != "" && $update_method_id != "" && $parent_version_number != null && $parent_version_number != "") {
 
     // Connect to the database
-    $databaseConnector = new DatabaseConnector();
-    $database = $databaseConnector->connectToDb();
+    $database = connectToDatabase();
 
     // Log the used operating system version (only when using the app).
     if (strpos($_SERVER['HTTP_USER_AGENT'], 'Oxygen_updater_') !== FALSE) {

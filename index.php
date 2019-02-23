@@ -6,7 +6,7 @@
 
     // Localize the page.
     //$httpLanguage = isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : 'en';
-    require_once initText(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2), (isset($_GET['lang'])? $_GET['lang'] : null));
+    require_once getTextFileToInclude(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2), (isset($_GET['lang'])? $_GET['lang'] : null));
 
     // HTML Purifier prevents XSS attacks.
     $purifier = initHtmlPurifier();

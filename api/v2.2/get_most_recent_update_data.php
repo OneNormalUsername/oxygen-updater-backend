@@ -1,6 +1,6 @@
 <?php
-include '../shared/DatabaseConnector.php';
-include '../shared/FilenameUtils.php';
+include '../shared/database.php';
+include '../shared/filename.php';
 
 // Obtain all required request parameters.
 $device_id = $_GET["device_id"];
@@ -11,8 +11,7 @@ header('Content-type: application/json');
 if($device_id != null && $update_method_id != null && $device_id != "" && $update_method_id != "") {
 
     // Connect to the database
-    $databaseConnector = new DatabaseConnector();
-    $database = $databaseConnector->connectToDb();
+    $database = connectToDatabase();
 
     $query = $database->prepare("SELECT * FROM update_data WHERE device_id = :device_id AND update_method_id = :update_method_id AND is_latest_version = TRUE ORDER BY id DESC LIMIT 1");
     $query->bindParam(':device_id', $device_id);

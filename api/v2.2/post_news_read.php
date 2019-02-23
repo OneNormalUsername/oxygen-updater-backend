@@ -1,5 +1,5 @@
 <?php
-include '../shared/DatabaseConnector.php';
+include '../shared/database.php';
 
 // Set the return type to JSON.
 header('Content-type: application/json');
@@ -7,35 +7,25 @@ header('Content-type: application/json');
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && strpos($_SERVER['HTTP_USER_AGENT'], 'Oxygen_updater_') !== false) {
 
     // Connect to the database
-    $database = (new DatabaseConnector())->connectToDb();
+    $database = connectToDatabase();
 
     //Get the news item ID from the request body
     $json = json_decode(file_get_contents('php://input'), true);
     $newsItemId = $json["news_item_id"];
 
-    // Get old times read value from db.
-    $oldTimesReadQuery = $database->prepare("SELECT times_read FROM news_item WHERE id = :id");
-    $oldTimesReadQuery->bindParam(":id", $newsItemId);
-    $oldTimesReadQuery->execute();
-
-    // Increment old times read value by 1
-    $oldTimesRead = intval($oldTimesReadQuery->fetch(PDO::FETCH_ASSOC)["times_read"]);
-    $newTimesRead = $oldTimesRead + 1;
-
-    // Store new value in the db.
-    $newTimesReadQuery = $database->prepare("UPDATE news_item SET times_read = :new_times_read WHERE id = :id");
-    $newTimesReadQuery->bindParam(":id", $newsItemId);
-    $newTimesReadQuery->bindParam(":new_times_read", $newTimesRead);
-    $newTimesReadQuery->execute();
+    // Update the the amount of times read in the db.
+    $updateTimesReadQuery = $database->prepare("UPDATE news_item SET times_read = times_read + 1 WHERE id = :id");
+    $updateTimesReadQuery->bindParam(":id", $newsItemId);
+    $updateTimesReadQuery->execute();
 
     // Disconnect form the database;
     $database = null;
 
     // Return a success message if the news item has been updated successfully.
-    if ($newTimesReadQuery->rowCount() > 0) {
+    if ($updateTimesReadQuery->rowCount() > 0) {
         echo(json_encode(array("success" => true)));
     } else {
-        echo(json_encode(array("success" => false, "errorMessage" => "Unable to store log entry into the database.")));
+        echo(json_encode(array("success" => false, "errorMessage" => "Unable to mark news item as read due to a database error.")));
     }
 } else {
     echo json_encode(array("success" => false, "error_message" => "Access Denied"));

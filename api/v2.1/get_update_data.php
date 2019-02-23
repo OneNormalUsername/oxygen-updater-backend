@@ -1,6 +1,6 @@
 <?php
-include 'Repository/DatabaseConnector.php';
-include 'filename.php';
+include '../shared/database.php';
+include '../shared/filename.php';
 
 // Obtain all required request parameters.
 $device_id = $_GET["device_id"];
@@ -14,8 +14,7 @@ header('Content-type: application/json');
 if($device_id != null && $update_method_id != null && $device_id != "" && $update_method_id != "" && $parent_version_number != null && $parent_version_number != "") {
 
     // Connect to the database
-    $databaseConnector = new DatabaseConnector();
-    $database = $databaseConnector->connectToDb();
+    $database = connectToDatabase();
 
     // Test if the update method uses the new Incremental (parent) system or not.
     $updateMethodQuery = $database->prepare("SELECT * FROM update_method WHERE id = :update_method_id");

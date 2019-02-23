@@ -1,5 +1,5 @@
 <?php
-include '../shared/DatabaseConnector.php';
+include '../shared/database.php';
 
 header('Content-Type: application/json');
 
@@ -32,10 +32,8 @@ if(strpos($orderId, 'GPA') === FALSE) {
     $purchaseState = 1; // Mark the invalid purchase as being cancelled. I still want to save it though, so I can see how many invalid / hacked purchases are being made.
 }
 
-
 //Establish a database connection
-$databaseConnector = new DatabaseConnector();
-$database = $databaseConnector->connectToDb();
+$database = connectToDatabase();
 $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // Store the purchase details in the database.

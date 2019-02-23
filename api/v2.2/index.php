@@ -6,10 +6,9 @@
 </head>
 <body>
 <?php
-    include '../shared/DatabaseConnector.php';
+    include '../shared/database.php';
 
-    $databaseConnector = new DatabaseConnector();
-    $database = $databaseConnector->connectToDb();
+    $database = connectToDatabase();
 
     $query = $database->query("SELECT status FROM server_status");
     $result = $query->fetch(PDO::FETCH_ASSOC);

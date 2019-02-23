@@ -1,9 +1,8 @@
 <?php
-include "Repository/DatabaseConnector.php";
+include '../shared/database.php';
 
 // Connect to the database
-$databaseConnector = new DatabaseConnector();
-$database = $databaseConnector->connectToDb();
+$database = connectToDatabase();
 
 // Obtain all required request parameters.
 $deviceId = $_GET["device_id"];

@@ -1,9 +1,8 @@
 <?php
-include '../shared/DatabaseConnector.php';
+include '../shared/database.php';
 
 // Connect to the database
-$databaseConnector = new DatabaseConnector();
-$database = $databaseConnector->connectToDb();
+$database = connectToDatabase();
 
 // Execute the query
 $query = $database->query("SELECT id, name, product_names FROM device WHERE enabled = TRUE ORDER BY name");

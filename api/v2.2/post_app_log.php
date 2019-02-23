@@ -1,5 +1,5 @@
 <?php
-include '../shared/DatabaseConnector.php';
+include '../shared/database.php';
 
 // Always compare log dates using Dutch time zone
 date_default_timezone_set('Europe/Amsterdam');
@@ -44,8 +44,7 @@ if ($updateMethodId === '-1' || $updateMethodId === -1) {
 }
 
 //Establish a database connection
-$databaseConnector = new DatabaseConnector();
-$database = $databaseConnector->connectToDb();
+$database = connectToDatabase();
 $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // Store the log entry in the database.

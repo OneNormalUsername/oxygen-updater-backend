@@ -5,12 +5,12 @@ require_once 'texts.generic.php';
 
 
 /**
- * Initialize the translation system by providing the appropriate text file.
+ * Initialize the translation system by returning the appropriate text file to include.
  * @param $browserLanguage string Language of the web browser
  * @param $requestLanguage string Language of the web request, or null if not supplied
- * @return string Text file to import for getting translations.
+ * @return string Text file to include for getting translations.
  */
-function initText($browserLanguage, $requestLanguage = null) {
+function getTextFileToInclude($browserLanguage, $requestLanguage = null) {
     if ($requestLanguage != null) {
         // Returns the name of the to-be-loaded translations file based on the request param language.
         if ($requestLanguage == 'nl') {
@@ -64,21 +64,6 @@ function initHtmlPurifier() {
     $config = HTMLPurifier_Config::createDefault();
     $config->set('HTML.Allowed', 'a[href],i,b,p[class],span[class]');
     return new HTMLPurifier($config);
-}
-
-/**
- * Get a variable from the environment, and fall back to a default value if it isn't set.
- * @param $variableName string Variable name to lookup in the Apache environment.
- * @param $defaultValue string Variable name to fallback to if the variable is not present.
- * @return array|false|string Value if it exists, or defaultValue if it doesn't exist
- */
-function getenvOrDefault($variableName, $defaultValue) {
-    $value = getenv($variableName);
-    if ($value && $value != '1') {
-        return $value;
-    } else {
-        return $defaultValue;
-    }
 }
 
 /**Connect to the Oxygen Updater database.

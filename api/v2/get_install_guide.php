@@ -1,5 +1,5 @@
 <?php
-include 'Repository/DatabaseConnector.php';
+include '../shared/database.php';
 
 // Obtain all required request parameters.
 $device_id = $_GET["device_id"];
@@ -13,8 +13,7 @@ header('Content-type: application/json');
 if($device_id != null && $device_id != "" && $update_method_id != null && $update_method_id != "" && $page_number != null && $page_number != "") {
 
     // Connect to the database
-    $databaseConnector = new DatabaseConnector();
-    $database = $databaseConnector->connectToDb();
+    $database = connectToDatabase();
 
     // Fetch all update methods that are enabled for this device.
 
