@@ -155,7 +155,7 @@ $db = null;
 </div>
 
 <!-- Missing OS versions widget -->
-<div class="row" style="margin-top: 25px;">
+<div class="row" style="margin-top: 25px; margin-bottom: 250px;">
     <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -174,7 +174,7 @@ $db = null;
                     foreach($missingVersionsInDatabase as $missingVersion) {
                         echo '
                     <tr>
-                        <td style="padding-left: 15px;">' . $missingVersion['version_number'] . '</td>
+                        <td style="padding-left: 15px; word-break:break-all;">' . $missingVersion['version_number'] . '</td>
                         <td style="padding-right: 15px;">' . $missingVersion['times_found'] . '</td>
                     </tr>
                     ';

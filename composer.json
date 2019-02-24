@@ -5,7 +5,9 @@
     "require": {
         "ezyang/htmlpurifier": "4.9.3",
         "ext-pdo": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-curl": "*",
+        "ext-mbstring": "*"
     },
     "license": "MIT",
     "authors": [

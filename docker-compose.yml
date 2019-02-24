@@ -12,11 +12,25 @@ services:
         links:
             - 'mariadb'
         environment:
+            # This is a *DEVELOPER* environment. These values are not the same values of the currently hosted environments
+
+            # Database access
             DATABASE_HOST: "mariadb"
             DATABASE_USER: "root"
             DATABASE_PASS: "test1234"
             DATABASE_NAME: "oxygen_updater"
 
+            # Server timezone for use in PHP scripts
+            TIMEZONE: "Europe/Amsterdam"
+
+            # News image uploader (usable for Admins with a valid login to the Admin Portal)
+            # Path where the news images are stored on Disk
+            NEWS_IMAGES_PATH: "./img/news"
+            # Relative URL where the news images are accessible on the domain.
+            NEWS_IMAGE_RELATIVE_URL: "./img/news"
+            # Authentication service url. In real environments, this is the API of the Admin Portal
+            # for *development* purposes, a test endpoint granting user=test-admin and password=test-admin access is available
+            NEWS_IMAGE_UPLOADER_AUTH_URL: "https://test.oxygenupdater.com/news_image_login_test.php"
     composer:
       restart: 'no'
       image: composer:1.7.3
