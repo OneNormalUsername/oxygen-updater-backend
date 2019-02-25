@@ -16,6 +16,11 @@ $use_auth = true;
 // When false, auth using remote endpoint (more secure and allows user management)
 $use_in_memory_auth = false;
 
+// When using remote auth, include the HTTPFul REST library
+if ($use_in_memory_auth === false) {
+    include 'vendor/autoload.php';
+}
+
 // Users: array('Username' => 'Password', 'Username2' => 'Password2', ...), Password has to encripted into MD5
 $auth_users = array();
 
@@ -60,7 +65,7 @@ $iconv_input_encoding = 'UTF-8';
 $datetime_format = 'd.m.y H:i';
 
 // allowed upload file extensions
-$upload_extensions = 'png,jpg'; // 'gif,png,jpg'
+$upload_extensions = 'png,PNG,jpg,JPG,jpeg,JPEG,gif,GIF,tif,TIF,tiff,TIFF,bmp,BMP';
 
 // show or hide the left side tree view
 $show_tree_view = false;
@@ -130,6 +135,8 @@ if (isset($_GET['logout'])) {
         fm_set_msg('Error logging out, please contact an admin', 'error');
     } else {
         unset($_SESSION['auth_token']);
+        unset($_SESSION['JSESSIONID']);
+        unset($_SESSION['XSRF-TOKEN']);
         unset($_SESSION['logged']);
         fm_redirect(FM_SELF_URL);
     }
@@ -142,28 +149,62 @@ if (isset($_GET['img'])) {
 }
 
 // Auth
+// Custom Oxygen Updater code to retrieve XSRF token from the Admin Portal API
+function storeAdminPortalXsrfTokenAndSessionId(\Httpful\Response $response) {
+    // Httpful fails when multiple headers with the same name are returned (only returns last header) so have to do regex match in raw headers :(
+
+    $headerString = $response->raw_headers;
+
+    $xsrfRegex = '/Set-Cookie: XSRF-TOKEN=([a-zA-Z0-9-]+); Path/';
+    $xsrfMatches = array();
+    $sessionIdRegex = '/Set-Cookie: JSESSIONID=([a-zA-z0-9]+); Path/';
+    $sessionIdMatches = array();
+
+    if (preg_match($xsrfRegex, $headerString, $xsrfMatches) === 1) {
+        $xsrfToken = $xsrfMatches[1];
+        $_SESSION['XSRF-TOKEN'] = $xsrfToken;
+    }
+
+    if (preg_match($sessionIdRegex, $headerString, $sessionIdMatches) === 1) {
+        $sessionId = $sessionIdMatches[1];
+        $_SESSION['JSESSIONID'] = $sessionId;
+    }
+
+    return $xsrfToken;
+}
+
 // Custom Oxygen Updater code to login using the Admin Portal API
 function login($user, $password) {
     global $auth_url;
 
-    $requestHeaders = array('Content-Type: application/json');
-    $jsonBody = json_encode(array("username" => $user, "password" => $password));
-
-    // We log in the user by performing a POST request with the username and password (in JSON) to the authentication endpoint.
-    $ch = curl_init($auth_url);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $requestHeaders);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonBody);
-
-    $response = curl_exec($ch);
-    $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-    // Technical error executing request: return null;
-    if (curl_errno($ch)) {
-        error_log("Error when logging in user for news image uploading: " . curl_error($ch));
+    // Stage 1/2: We perform a handshake to the server to obtain a CSRF token and a session (JSESSIONID cookie)
+    try {
+        $handshakeResponse = \Httpful\Request::get($auth_url . '/current')->send();
+    } catch (\Httpful\Exception\ConnectionErrorException $e) {
+        // Technical error executing request: return null;
+        error_log("Error when logging in user for news image uploading: " . $e->getTraceAsString());
         return null;
     }
+    $xsrfToken = storeAdminPortalXsrfTokenAndSessionId($handshakeResponse);
+
+    // Stage 2/2: We log in the user by performing a POST request with the username and password (in JSON) to the authentication endpoint.
+    // Hereby, we provide the X-XSRF-TOKEN header and JSESSIONID cookie retrieved from the handshake.
+    // Afterwards, we save the SESSIONID and last XSRF token of the admin portal so we can perform a clean logout if needed.
+    $jsonBody = json_encode(array("username" => $user, "password" => $password));
+
+    try {
+        $authResponse = \Httpful\Request::post($auth_url)
+            ->addHeader('Cookie', 'XSRF-TOKEN=' . $xsrfToken)
+            ->addHeader('X-XSRF-TOKEN', $xsrfToken)
+            ->body($jsonBody, 'application/json')
+            ->send();
+    } catch (\Httpful\Exception\ConnectionErrorException $e) {
+        // Technical error executing request: return null;
+        error_log("Error when logging in user for news image uploading: " . $e->getTraceAsString());
+        return null;
+    }
+
+    $status_code = $authResponse->code;
 
     // Status code 401 indicates bad credentials, any other non-200 status code indicates technical error.
     if ($status_code === 401) {
@@ -173,16 +214,18 @@ function login($user, $password) {
         return null;
     }
 
-    $json_response = json_decode($response, true);
+    storeAdminPortalXsrfTokenAndSessionId($authResponse);
+
+    $json_response = $authResponse->body;
 
     // Empty response indicates technical error.
-    if (!is_array($json_response)) {
+    if (!is_array($json_response->roles)) {
         error_log("Error when logging in user for news image uploading. Invalid response: " . $json_response);
         return null;
     }
 
     // Currently, only Admin users are allowed to upload news images.
-    return in_array('ADMIN', $json_response['roles']);
+    return in_array('ADMIN', $json_response->roles);
 }
 
 // Custom Oxygen Updater code to logout using the Admin Portal API
@@ -190,19 +233,24 @@ function logout() {
     global $auth_url;
 
     // We log out the user by performing a DELETE request on the authentication endpoint.
-    $ch = curl_init($auth_url);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_exec($ch);
+    $xsrfToken = $_SESSION['XSRF-TOKEN'];
+    $sessionId = $_SESSION['JSESSIONID'];
 
-    // Technical error executing request: return false;
-    if (curl_errno($ch)) {
-        error_log("Error when logging out user for news image uploading: " . curl_error($ch));
+
+    try {
+        $logoutResponse = \Httpful\Request::delete($auth_url)
+            ->addHeader('Cookie', 'XSRF-TOKEN=' . $xsrfToken. '; JSESSIONID=' . $sessionId)
+            ->addHeader('X-XSRF-TOKEN', $xsrfToken)
+            ->send();
+    } catch (\Httpful\Exception\ConnectionErrorException $e) {
+        // Technical error executing request: return false;
+        error_log("Error when logging out user for news image uploading: " . $e->getTraceAsString());
         return false;
     }
 
     // Status code other than 200 indicates technical error.
-    $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $status_code = $logoutResponse->code;
+
     if ($status_code !== 200 && $status_code !== 401) {
         error_log("Error when logging out user for news image uploading. HTTP status code: " . $status_code);
         return false;

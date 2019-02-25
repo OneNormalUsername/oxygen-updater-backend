@@ -27,14 +27,19 @@ services:
             # Path where the news images are stored on Disk
             NEWS_IMAGES_PATH: "./img/news"
             # Relative URL where the news images are accessible on the domain.
-            NEWS_IMAGE_RELATIVE_URL: "./img/news"
-            # Authentication service url. In real environments, this is the API of the Admin Portal
-            # for *development* purposes, a test endpoint granting user=test-admin and password=test-admin access is available
-            NEWS_IMAGE_UPLOADER_AUTH_URL: "https://test.oxygenupdater.com/news_image_login_test.php"
+            NEWS_IMAGES_RELATIVE_URL: "./img/news"
+            # Authentication service URL. This is part of the Admin Portal, which is not open source.
+            # Set $use_in_memory_auth in news-images.php to true to use / work on the news images uploader
+            NEWS_IMAGE_UPLOADER_AUTH_URL: ""
+
+            # XDebug: Add your own IP to the remote_host of XDebug if you want to debug PHP (e.g. using PHPStorm).
+            # Docker Toolbox: type docker-machine ip to get the IP to use here.
+            # Docker for Mac / Linux Docker / Docker for Windows: set to localhost?
+            XDEBUG_CONFIG: remote_host=192.168.99.1
     composer:
       restart: 'no'
       image: composer:1.7.3
-      command: composer install
+      command: composer update
       volumes:
        - $PWD:/app
 
@@ -65,7 +70,5 @@ services:
             PMA_USER: root
             PMA_PASSWORD: test1234
             PMA_ARBITRARY: 1
-
-
 volumes:
     mariadb:
