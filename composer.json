@@ -10,7 +10,7 @@
         "ext-iconv": "*",
         "ext-mbstring": "*",
         "ext-zip": "*",
-        "nategood/httpful": "0.2.20",
+        "nategood/httpful": "0.2.20"
     },
     "license": "MIT",
     "authors": [
