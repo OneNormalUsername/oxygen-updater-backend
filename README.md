@@ -17,11 +17,7 @@ This repository does *not* contain:
 ## Running / building it
 
 ### Docker
-The easiest way to develop or host this project, is by using Docker. It launches everything that's needed to work on the full backend of the Oxygen Updater app.
-
-#### MacOS / Linux
-Mac: Install Docker from `https://www.docker.com/products/docker-desktop`
-Linux: Install Docker for your distro from `https://docs.docker.com/install/linux/docker-ce/ubuntu/` (use the side menu to select other distro than Ubuntu).
+The easiest way to develop or host this project, is by using Docker. It launches everything that's needed to work on the full backend of the Oxygen Updater app. See below on how to install Docker for your platform.
 
 Once you've got Docker installed and running, just run `docker-compose up` from the folder you've cloned this repo to launch everything at once.
 That will launch the following:
@@ -33,10 +29,21 @@ That will launch the following:
 
 Also, a PHPMyAdmin is spawned at `localhost:8183` so you can perform operations on the database.
 
-#### Windows
-Windows users have a disadvantage when using Docker. If you somehow have access to a Mac or Linux box, it is preferred to use that instead.
+#### Installing Docker on MacOS / Linux
+Mac: Install Docker Desktop from `https://www.docker.com/products/docker-desktop`
+Linux: Install a Docker package for your distro from `https://docs.docker.com/install/linux/docker-ce/ubuntu/` (use the side menu to select other distro than Ubuntu).
 
-Most Windows developers will have to use Docker Machine, as the regular Docker requires Hyper-V and therfore cannot be used on the non-Pro Windows 10. Also, the regular Docker for Windows does not work together with the Android emulator. If you only plan to run the Android app on a real device then you can use the regular Docker for Windows.
+#### Installing Docker on Windows
+##### Windows 10 Pro / Enterprise 1803+ with Hyper-V and Hypervisor Platform
+If you are using the Pro or Enterprise edition of Windows 10, have the April 2018 update or newer (1803+) and have a CPU which supports Hyper-V, then you can use Docker almost the same way as on a Mac or Linux PC. The install procedure is then as following:
+- Fully enable Hyper-V and the Hypervisor Platform under Windows Features (type "Turn Windows features on or off" in the start menu)
+- Restart your computer
+- Install Docker Desktop from `https://www.docker.com/products/docker-desktop`
+- The Docker tray icon tells you if Docker is running properly
+- See `https://android-developers.googleblog.com/2018/07/android-emulator-amd-processor-hyper-v.html` for more information on how to use the Android Emulator to run the app in combination with Hyper-V and the Docker-hosted backend
+
+##### Windows 10 Home or CPU incompatible with Hyper-V
+If you are using Windows 10 Home or have a CPU which does not support Hyper-V, you will have to use Docker Machine, as the regular Docker requires Hyper-V to run. Please note that Docker Machine is *much slower* than the regular Docker for Windows and *has been deprecated*, so only use this as a last resort.
 
 You can get Docker Machine by following the instructions found on https://docs.docker.com/toolbox/. Docker Toolbox contains Docker Machine. Make sure that Docker Compose for Windows is checked during setup.
 
