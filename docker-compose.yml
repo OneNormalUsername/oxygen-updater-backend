@@ -41,7 +41,7 @@ services:
       image: composer:1.7.3
       command: bash -c "composer update; chmod -R 777 /app/vendor"
       volumes:
-       - $PWD:/app
+       - ./:/app
 
     mariadb:
         image: mariadb:10.2
