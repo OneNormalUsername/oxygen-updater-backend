@@ -1,17 +1,59 @@
+# Deployable image of the Oxygen Updater Backend. Suitable for use in production
 FROM php:7.2.12-apache
 MAINTAINER arjan vlek
-RUN docker-php-ext-install pdo_mysql mysqli; \
-    pecl install xdebug \
-        && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
-        && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
-        && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini; \
+
+# The Apache web server listens at port 80
+EXPOSE 80
+
+# 1. Setup the image to contain our environment, required PHP extensions and required Apache modules
+RUN apt-get update; \
+    apt-get install -y apt-utils zlib1g-dev; \
+    docker-php-ext-install pdo_mysql mysqli zip; \
     a2enmod rewrite; \
     a2enmod headers; \
     echo 'PassEnv DATABASE_HOST' > /etc/apache2/conf-enabled/expose-env.conf; \
     echo 'PassEnv DATABASE_USER' >> /etc/apache2/conf-enabled/expose-env.conf; \
     echo 'PassEnv DATABASE_PASS' >> /etc/apache2/conf-enabled/expose-env.conf; \
     echo 'PassEnv DATABASE_NAME' >> /etc/apache2/conf-enabled/expose-env.conf; \
-    echo 'PassEnv TIMEZONE' >> /etc/apache2/conf-enabled/expose-env.conf; \
-    echo 'PassEnv NEWS_IMAGES_PATH' >> /etc/apache2/conf-enabled/expose-env.conf; \
-    echo 'PassEnv NEWS_IMAGES_RELATIVE_URL' >> /etc/apache2/conf-enabled/expose-env.conf; \
-    echo 'PassEnv NEWS_IMAGE_UPLOADER_AUTH_URL' >> /etc/apache2/conf-enabled/expose-env.conf
+    echo 'PassEnv TIMEZONE' >> /etc/apache2/conf-enabled/expose-env.conf
+
+# 2. Copy all project files and dirs to the webroot of the Apache container
+COPY ./.well-known /var/www/html/.well-known
+COPY ./api /var/www/html/api
+COPY ./css /var/www/html/css
+COPY ./fonts /var/www/html/fonts
+COPY ./img /var/www/html/img
+
+# Routing and rewriting
+COPY .htaccess /var/www/html
+
+# Webpages
+COPY *.php /var/www/html/
+COPY *.html /var/www/html/
+COPY *.pdf /var/www/html/
+
+# Robots.txt
+COPY robots.txt /var/www/html
+
+# Favicon and theming
+COPY favicon.ico /var/www/html
+COPY manifest.json /var/www/html
+COPY browserconfig.xml /var/www/html
+
+# 3. Install the dependencies for the backend code using Composer
+COPY ./composer.json /var/www/html
+COPY ./deployment/install-composer.sh /var/www/html
+
+RUN apt-get install -y wget unzip; \
+    cd /var/www/html; \
+    chmod +x install-composer.sh; \
+    ./install-composer.sh; \
+    php composer.phar update
+
+# 4. Remove the Composer installer and files
+RUN cd /var/www/html; \
+    rm composer.json; \
+    rm composer.lock; \
+    rm composer.phar; \
+    rm install-composer.sh
+
