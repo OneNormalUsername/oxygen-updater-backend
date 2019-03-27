@@ -48,7 +48,8 @@ RUN apt-get install -y wget unzip; \
     cd /var/www/html; \
     chmod +x install-composer.sh; \
     ./install-composer.sh; \
-    php composer.phar update
+    php composer.phar update; \
+    chmod -R 777 vendor
 
 # 4. Remove the Composer installer and files
 RUN cd /var/www/html; \

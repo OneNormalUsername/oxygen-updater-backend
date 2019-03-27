@@ -1,0 +1,34 @@
+version: '3'
+services:
+  backend:
+    image: arjanvlek/oxygen-updater-backend
+    container_name: oxygen_updater_backend
+    ports:
+    - 8000:80
+    links:
+    - 'mariadb'
+    environment:
+      # This is a *TESTING* environment. These values are not the same values of the currently hosted environments
+
+      # Database access
+      DATABASE_HOST: "mariadb"
+      DATABASE_USER: "oxygen-updater"
+      DATABASE_PASS: "be-the-first-to-update"
+      DATABASE_NAME: "oxygen_updater"
+
+      # Server timezone for use in PHP scripts
+      TIMEZONE: "Europe/Amsterdam"
+  mariadb:
+    image: mariadb:10.2
+    container_name: oxygen_updater_database
+    volumes:
+    - mariadb:/var/lib/mysql
+    environment:
+      TZ: "Europe/Amsterdam"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+      MYSQL_ROOT_PASSWORD: "test1234"
+      MYSQL_USER: 'oxygen-updater'
+      MYSQL_PASSWORD: 'be-the-first-to-update'
+      MYSQL_DATABASE: 'oxygen_updater'
+volumes:
+  mariadb:

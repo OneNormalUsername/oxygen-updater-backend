@@ -9,8 +9,5 @@ RewriteRule ^legal/$ oxygen_updater_privacy_policy_latest.pdf
 RewriteRule ^faq$ faq.php
 RewriteRule ^faq/$ faq.php
 
-RewriteRule ^news-images$ news-images.php
-RewriteRule ^news-images/$ news-images.php
-
 RewriteRule ^inappfaq$ in_app_faq.php
 RewriteRule ^inappfaq/$ in_app_faq.php [L]

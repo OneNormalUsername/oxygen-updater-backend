@@ -1,0 +1,116 @@
+# Persistent Volume Claim for storing the contents of the database.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: oxygen-updater-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  volumeMode: Filesystem
+  storageClassName: cinder-classic # Use the cheaper / classic storage option provided by OVH
+  resources:
+    requests:
+      storage: 5Gi # 5 GB storage for the database
+---
+# Service for: Oxygen Updater database
+# We create a service to get a DNS to "mariadb" inside our cluster.
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb
+spec:
+  selector:
+    app: database
+  ports:
+  - protocol: "TCP"
+    port: 3306
+    targetPort: 3306
+  type: LoadBalancer
+---
+# Deployment for: Oxygen Updater Database
+# The database may only exist once. It may not be replicated!
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb
+  labels:
+    app: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      containers:
+      - name: mariadb
+        image: mariadb:10.2
+        env:
+        - name: TZ
+          value: Europe/Amsterdam
+        - name: MYSQL_ROOT_PASSWORD
+          value: Anja=Rob6250!
+        - name: MYSQL_DATABASE
+          value: oxygen_updater
+        - name: MYSQL_ALLOW_EMPTY_PASSWORD
+          value: 'no'
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: db-data
+      volumes:
+      - name: db-data
+        persistentVolumeClaim:
+          claimName: oxygen-updater-data
+---
+# Service for: Oxygen Updater backend
+# We create a service to get a load balancer between the replicas
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  selector:
+    app: backend
+  ports:
+  - protocol: "TCP"
+    port: 8000
+    targetPort: 80
+  type: LoadBalancer
+---
+# Deployment for: Oxygen Updater Backend
+# We scale the backend to max 2
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  labels:
+    app: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: arjanvlek/oxygen-updater-backend:latest
+        env:
+        - name: TZ
+          value: Europe/Amsterdam
+        - name: TIMEZONE
+          value: Europe/Amsterdam
+        - name: DATABASE_HOST
+          value: mariadb
+        - name: DATABASE_USER
+          value: root
+        - name: DATABASE_PASS
+          value: Anja=Rob6250!
+        - name: DATABASE_NAME
+          value: oxygen_updater
