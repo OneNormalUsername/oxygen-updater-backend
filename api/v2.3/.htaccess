@@ -37,6 +37,9 @@ RewriteRule ^serverMessages/([-0-9]+)/([-0-9]+)/?$ get_server_messages.php?devic
 RewriteRule ^serverStatus$ get_server_status.php
 RewriteRule ^serverStatus/$ get_server_status.php
 
+RewriteRule ^submit-update-file$ post_submit_update_file.php
+RewriteRule ^submit-update-file/$ post_submit_update_file.php
+
 RewriteRule ^updateData/([-0-9]+)/([-0-9]+)/(.*)?$ get_update_data.php?device_id=$1&update_method_id=$2&parent_version_number=$3
 RewriteRule ^updateData/([-0-9]+)/([-0-9]+)/(.*)/?$ get_update_data.php?device_id=$1&update_method_id=$2&parent_version_number=$3
 
