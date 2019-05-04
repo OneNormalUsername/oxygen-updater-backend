@@ -24,6 +24,9 @@ if (empty($filename)) {
     die();
 }
 
+// remove ".tmp" from the filename. This is added when the file was not fully downloaded on the user's phone.
+$filename = str_replace('.tmp', '', $filename);
+
 // The filename is part of the Download URL. One would say, that by checking against all stored download URLs, we can see if we already have the submitted file.
 // However, as we only store download URLs of the latest builds, it is impossible to see if an older-submitted update file has already been added to the app.
 // Therefore, check using a possible list of OTA version numbers if the submitted file is already in the app's database.
