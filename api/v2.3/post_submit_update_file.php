@@ -84,7 +84,7 @@ $query->bindParam(':ota_version_number', $alreadyExistingOtaVersion); // null wh
 $query->execute();
 
 $success = $query->rowCount() > 0 && $alreadyExistingOtaVersion == null && !$invalidFilename;
-$errorMessage = $query->rowCount() === 0 ? 'Error storing submitted update file' : $alreadyExistingOtaVersion != null ? 'E_FILE_ALREADY_IN_DB' : ($invalidFilename === true ? 'E_FILE_INVALID' : null);
+$errorMessage = $query->rowCount() === 0 ? 'Error storing submitted update file' : ($alreadyExistingOtaVersion != null ? 'E_FILE_ALREADY_IN_DB' : ($invalidFilename === true ? 'E_FILE_INVALID' : null));
 
 // Disconnect from the database
 unset($database);
