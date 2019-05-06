@@ -37,14 +37,21 @@ function guessOTAVersionFromFilename($filename) {
     if (count($matches) === 5) {
         $results = array();
 
+        $updateRevision = intval($matches[3]);
+        if ($updateRevision < 10) {
+            $updateRevision = '0' . $updateRevision;
+        } else {
+            $updateRevision = '' . $updateRevision;
+        }
+
         for ($i = 65; $i <= 90; $i++) { // letters 'A' to 'Z'
             array_push($results,
                 sprintf(
-                    'OnePlus%sOxygen_%d.%s.%d_GLO_%s_%d',
+                    'OnePlus%sOxygen_%d.%s.%s_GLO_%s_%d',
                     $matches[1],
                     intval($matches[2]),
                     chr($i),
-                    intval($matches[3]), // framework version in 2 decimals, e.g. 43).
+                    $updateRevision, // framework version in 2 decimals, e.g. 43).
                     $matches[3], // framework version in 3 numbers, e.g. 043 instead of 43).
                     intval($matches[4])
                 )

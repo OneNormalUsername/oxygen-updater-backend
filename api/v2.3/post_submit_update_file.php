@@ -24,16 +24,30 @@ if (empty($filename)) {
     die();
 }
 
-// remove ".tmp" from the filename. This is added when the file was not fully downloaded on the user's phone.
+// Check if the file is not one of the following names. For example: Treble compatibility.zip would appear as a valid .zip file, but is not an OTA update file.
+$invalidFilename = false;
+$invalidFilenameParts = ['null', 'compatibility', 'recovery'];
+foreach ($invalidFilenameParts as $invalidFilenamePart) {
+    if (strpos($filename, $invalidFilenamePart) !== FALSE) {
+        $invalidFilename = true;
+        break;
+    }
+}
+
+// remove temporary suffixes from the filename. These may be added when the file is not fully downloaded on the user's phone at submission time.
+$filename = str_replace('~', '', $filename);
 $filename = str_replace('.tmp', '', $filename);
+$filename = str_replace('.crdownload', '', $filename);
+$filename = str_replace('(1)', '', $filename);
+$filename = str_replace('(2)', '', $filename);
+$filename = str_replace(' ', '', $filename);
 
 // The filename is part of the Download URL. One would say, that by checking against all stored download URLs, we can see if we already have the submitted file.
 // However, as we only store download URLs of the latest builds, it is impossible to see if an older-submitted update file has already been added to the app.
 // Therefore, check using a possible list of OTA version numbers if the submitted file is already in the app's database.
 // If so, the submission will not be shown to the contributors and administrators of the app.
-$possibleOtaVersionNumbers = guessOTAVersionFromFilename($filename);
-
 $alreadyExistingOtaVersion = null;
+$possibleOtaVersionNumbers = guessOTAVersionFromFilename($filename);
 
 $database = connectToDatabase();
 
@@ -48,18 +62,14 @@ if (!empty($possibleOtaVersionNumbers)) {
             break;
         }
     }
-
-    unset($allVersionNumbers);
 }
-
-unset($possibleOtaVersionNumbers);
 
 // Check if this file name has been submitted before
 $query = $database->prepare("SELECT COUNT(*) as count FROM submitted_update_file where `name` = :filename");
 $query->bindParam(':filename', $filename);
 $query->execute();
 $timesSubmittedBefore = $query->fetch(PDO::FETCH_ASSOC)['count'];
-unset($query);
+
 if ($timesSubmittedBefore == 0) {
     // If it has never been submitted before, create a new entry for it.
     $query = $database->prepare("INSERT INTO submitted_update_file(`name`, ota_version_number, times_submitted) VALUES (:filename, :ota_version_number, 1)");
@@ -73,13 +83,10 @@ $query->bindParam(':filename', $filename);
 $query->bindParam(':ota_version_number', $alreadyExistingOtaVersion); // null when not exists
 $query->execute();
 
-unset($json);
-unset($filename);
-unset($previouslySubmittedUpdateFileQuery);
-unset($alreadyExistingOtaVersion);
+$success = $query->rowCount() > 0 && $alreadyExistingOtaVersion == null && !$invalidFilename;
+$errorMessage = $query->rowCount() === 0 ? 'Error storing submitted update file' : $alreadyExistingOtaVersion != null ? 'E_FILE_ALREADY_IN_DB' : ($invalidFilename === true ? 'E_FILE_INVALID' : null);
+
+// Disconnect from the database
 unset($database);
-unset($timesSubmittedBefore);
 
-echo json_encode(array("success" => $query->rowCount() > 0, "error_message" => $query->rowCount() === 0 ? 'Error storing submitted update file' : null));
-
-unset($query);
+echo json_encode(array("success" => $success, "error_message" => $errorMessage));
