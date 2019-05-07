@@ -24,15 +24,14 @@ if (empty($filename)) {
     die();
 }
 
-// Check if the file is not one of the following names. For example: Treble compatibility.zip would appear as a valid .zip file, but is not an OTA update file.
-$invalidFilename = false;
-$invalidFilenameParts = ['null', 'compatibility', 'recovery'];
-foreach ($invalidFilenameParts as $invalidFilenamePart) {
-    if (strpos($filename, $invalidFilenamePart) !== FALSE) {
-        $invalidFilename = true;
-        break;
-    }
+// Check if the filename is a '.zip' file and if the filename contains the word 'Oxygen'. If not, do not store it in the database and return to the app that we don't need this file.
+$validFilename = strpos($filename, 'Oxygen') !== FALSE && strpos($filename, '.zip') !== FALSE;
+
+if (!$validFilename) {
+    echo json_encode(array("success" => false, "error_message" => "E_FILE_INVALID"));
+    die();
 }
+
 
 // remove temporary suffixes from the filename. These may be added when the file is not fully downloaded on the user's phone at submission time.
 $filename = str_replace('~', '', $filename);
@@ -83,8 +82,8 @@ $query->bindParam(':filename', $filename);
 $query->bindParam(':ota_version_number', $alreadyExistingOtaVersion); // null when not exists
 $query->execute();
 
-$success = $query->rowCount() > 0 && $alreadyExistingOtaVersion == null && !$invalidFilename;
-$errorMessage = $query->rowCount() === 0 ? 'Error storing submitted update file' : ($alreadyExistingOtaVersion != null ? 'E_FILE_ALREADY_IN_DB' : ($invalidFilename === true ? 'E_FILE_INVALID' : null));
+$success = $query->rowCount() > 0 && $alreadyExistingOtaVersion == null && $validFilename;
+$errorMessage = $query->rowCount() === 0 ? 'Error storing submitted update file' : ($alreadyExistingOtaVersion != null ? 'E_FILE_ALREADY_IN_DB' : ($validFilename !== true ? 'E_FILE_INVALID' : null));
 
 // Disconnect from the database
 unset($database);
