@@ -36,6 +36,9 @@ if (!$validFilename) {
 // remove temporary suffixes from the filename. These may be added when the file is not fully downloaded on the user's phone at submission time.
 $filename = str_replace('~', '', $filename);
 $filename = str_replace('.tmp', '', $filename);
+$filename = str_replace('.tar', '', $filename);
+$filename = str_replace('.jar', '', $filename);
+$filename = str_replace('.gz', '', $filename);
 $filename = str_replace('.crdownload', '', $filename);
 $filename = str_replace('(1)', '', $filename);
 $filename = str_replace('(2)', '', $filename);
