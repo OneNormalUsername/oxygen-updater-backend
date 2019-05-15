@@ -76,6 +76,32 @@ if ($timesSubmittedBefore == 0) {
     // If it has never been submitted before, create a new entry for it.
     $query = $database->prepare("INSERT INTO submitted_update_file(`name`, ota_version_number, times_submitted) VALUES (:filename, :ota_version_number, 1)");
 
+    // If the never-submitted-before file is a valid OxygenOS file and is not a match to an existing update, notify the #contributors Discord channel.
+    if ($alreadyExistingOtaVersion == null && $validFilename) {
+        include '../shared/webhook.php';
+
+        // Message author and action URL not available on GitHub.
+        $authorName = getenv('SUBMITTED_UPDATE_FILE_WEBHOOK_AUTHOR_NAME');
+        $messageActionUrl = getenv('SUBMITTED_UPDATE_FILE_WEBHOOK_ACTION_URL');
+        $webhookMessageDetails = make_webhook_embed(
+            'Oxygen Updater',
+            'https://oxygenupdater.com',
+            'New update file submitted',
+            'The following new update file has been submitted: ' . $filename,
+            $authorName,
+            $messageActionUrl,
+            'https://oxygenupdater.com/img/news/app_icon-min.png'
+        );
+
+        // webhook URL not available on GitHub to prevent abuse
+        $webhookUrl = getenv('SUBMITTED_UPDATE_FILE_WEBHOOK_URL');
+        make_webhook_call(
+            $webhookUrl,
+            'New update file submitted: ' . $filename,
+            $webhookMessageDetails
+        );
+    }
+
 } else {
     // Else, increment the submit count of the existing entry.
     $query = $database->prepare("UPDATE submitted_update_file SET times_submitted = times_submitted + 1, ota_version_number = :ota_version_number where `name` = :filename");
