@@ -27,6 +27,38 @@ if($device_id != null && $update_method_id != null && $device_id != "" && $updat
             $logOperatingSystemVersionQuery = $database->prepare("INSERT INTO used_operating_system_version(operating_system_version, times_logged) VALUES (:operating_system_version, 1)");
             $logOperatingSystemVersionQuery->bindParam(':operating_system_version', $parent_version_number);
             $logOperatingSystemVersionQuery->execute();
+
+            // Test if the newly-created entry is considered "missing" (see vw_missing_update_data). If so, send a message to the #contributors channel on Discord
+            $missingViewQuery = $database->prepare("SELECT * FROM vw_missing_update_data where version_number = :operating_system_version");
+            $missingViewQuery->bindParam(':operating_system_version', $parent_version_number);
+            $missingViewQuery->execute();
+
+            // If a row exists, the version is "missing" and the message must be sent.
+            if ($missingViewQuery->rowCount() > 0) {
+                include '../shared/webhook.php';
+
+                // Message author and action URL not available on GitHub.
+                $authorName = getenv('MISSING_UPDATE_VERSIONS_WEBHOOK_AUTHOR_NAME');
+                $messageActionUrl = getenv('MISSING_UPDATE_VERSIONS_WEBHOOK_ACTION_URL');
+                $webhookMessageDetails = make_webhook_embed(
+                    'Oxygen Updater',
+                    'https://oxygenupdater.com',
+                    'New update version spotted',
+                    'The following version (OTA) was detected: ' . $parent_version_number,
+                    $authorName,
+                    $messageActionUrl,
+                    'https://oxygenupdater.com/img/news/app_icon-min.png'
+                );
+
+                // webhook URL not available on GitHub to prevent abuse
+                $webhookUrl = getenv('MISSING_UPDATE_VERSIONS_WEBHOOK_URL');
+                make_webhook_call(
+                    $webhookUrl,
+                    'New update version spotted: ' . $parent_version_number,
+                    $webhookMessageDetails
+                );
+            }
+
         } else {
             // Else, increment the usage count of the existing log entry.
             $incrementOperatingSystemVersionUsageQuery = $database->prepare("UPDATE used_operating_system_version SET times_logged = times_logged + 1 where operating_system_version = :operating_system_version");

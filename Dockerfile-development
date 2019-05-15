@@ -15,4 +15,7 @@ RUN docker-php-ext-install pdo_mysql mysqli; \
     echo 'PassEnv TIMEZONE' >> /etc/apache2/conf-enabled/expose-env.conf; \
     echo 'PassEnv SUBMITTED_UPDATE_FILE_WEBHOOK_ACTION_URL' >> /etc/apache2/conf-enabled/expose-env.conf; \
     echo 'PassEnv SUBMITTED_UPDATE_FILE_WEBHOOK_AUTHOR_NAME' >> /etc/apache2/conf-enabled/expose-env.conf; \
-    echo 'PassEnv SUBMITTED_UPDATE_FILE_WEBHOOK_URL' >> /etc/apache2/conf-enabled/expose-env.conf
+    echo 'PassEnv SUBMITTED_UPDATE_FILE_WEBHOOK_URL' >> /etc/apache2/conf-enabled/expose-env.conf; \
+    echo 'PassEnv MISSING_UPDATE_VERSIONS_WEBHOOK_ACTION_URL' >> /etc/apache2/conf-enabled/expose-env.conf; \
+    echo 'PassEnv MISSING_UPDATE_VERSIONS_WEBHOOK_AUTHOR_NAME' >> /etc/apache2/conf-enabled/expose-env.conf; \
+    echo 'PassEnv MISSING_UPDATE_VERSIONS_WEBHOOK_URL' >> /etc/apache2/conf-enabled/expose-env.conf

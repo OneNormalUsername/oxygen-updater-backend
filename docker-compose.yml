@@ -25,9 +25,13 @@ services:
             TIMEZONE: "Europe/Amsterdam"
 
             # Discord webhook settings
-            SUBMITTED_UPDATE_FILE_WEBHOOK_ACTION_URL: "https://localhost:8000/"
+            SUBMITTED_UPDATE_FILE_WEBHOOK_ACTION_URL: "http://localhost:8000/"
             SUBMITTED_UPDATE_FILE_WEBHOOK_AUTHOR_NAME: "Oxygen Updater Developer"
             SUBMITTED_UPDATE_FILE_WEBHOOK_URL: "https://discordapp.com/api/webhooks/test/some.webhook.key"
+
+            MISSING_UPDATE_VERSIONS_WEBHOOK_ACTION_URL: "http://localhost:8000/"
+            MISSING_UPDATE_VERSIONS_WEBHOOK_AUTHOR_NAME: "Oxygen Updater Developer"
+            MISSING_UPDATE_VERSIONS_WEBHOOK_URL: "https://discordapp.com/api/webhooks/test/some.other.webhook.key"
 
             # News image uploader (usable for Admins with a valid login to the Admin Portal)
             # Path where the news images are stored on Disk

@@ -18,7 +18,10 @@ RUN apt-get update; \
     echo 'PassEnv TIMEZONE' >> /etc/apache2/conf-enabled/expose-env.conf; \
     echo 'PassEnv SUBMITTED_UPDATE_FILE_WEBHOOK_ACTION_URL' >> /etc/apache2/conf-enabled/expose-env.conf; \
     echo 'PassEnv SUBMITTED_UPDATE_FILE_WEBHOOK_AUTHOR_NAME' >> /etc/apache2/conf-enabled/expose-env.conf; \
-    echo 'PassEnv SUBMITTED_UPDATE_FILE_WEBHOOK_URL' >> /etc/apache2/conf-enabled/expose-env.conf
+    echo 'PassEnv SUBMITTED_UPDATE_FILE_WEBHOOK_URL' >> /etc/apache2/conf-enabled/expose-env.conf; \
+    echo 'PassEnv MISSING_UPDATE_VERSIONS_WEBHOOK_ACTION_URL' >> /etc/apache2/conf-enabled/expose-env.conf; \
+    echo 'PassEnv MISSING_UPDATE_VERSIONS_WEBHOOK_AUTHOR_NAME' >> /etc/apache2/conf-enabled/expose-env.conf; \
+    echo 'PassEnv MISSING_UPDATE_VERSIONS_WEBHOOK_URL' >> /etc/apache2/conf-enabled/expose-env.conf
 
 # 2. Copy all project files and dirs to the webroot of the Apache container
 COPY ./.well-known /var/www/html/.well-known
