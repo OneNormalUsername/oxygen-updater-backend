@@ -21,18 +21,60 @@ function getFilename($downloadUrl) {
 }
 
 function guessOTAVersionFromFilename($filename) {
+    // Try the modern scheme first. If it works, it will result in a single possible match.
+
+    // 'Modern' scheme (with build letter):
+    // OP7P full: OnePlus7ProOxygen_21.O.07_OTA_007_all_1905120542_aa37bad.zip
+    // OP7P incr: OnePlus7ProOxygen_21.E.08_OTA_005-008_patch_1905150058_814a17.zip
+
+    // Groups modern:
+    // 1: OnePlus device (eg 7Pro).
+    // 2: OTA framework version (eg 21)
+    // 3: Build letter (eg E)
+    // 4: update revision number (eg 007)
+    // 5: update build date (eg 1905120542)
+    $modernRegex = '/^OnePlus([A-Za-z0-9]*)Oxygen(?:A?)_([0-9]{2})\.([A-Z])\.(?:[0-9]){2}_OTA_(?:[0-9]*-?)([0-9]{3})_(?:all|patch)_([0-9]*)_(?:.*).zip$/';
+    $matches = array();
+    preg_match($modernRegex, $filename, $matches);
+    unset($modernRegex);
+    if (count($matches) === 6) {
+
+        $updateRevision = intval($matches[4]);
+        if ($updateRevision < 10) {
+            $updateRevision = '0' . $updateRevision;
+        } else {
+            $updateRevision = '' . $updateRevision;
+        }
+
+        return array(
+            sprintf(
+                'OnePlus%sOxygen_%d.%s.%s_GLO_%s_%d',
+                $matches[1],
+                intval($matches[2]),
+                $matches[3],
+                $updateRevision, // update revision in 2 decimals, e.g. 43).
+                $matches[4], // update revision in 3 numbers, e.g. 043 instead of 43).
+                intval($matches[5])
+            )
+        );
+    }
+
+    // If not matched, try legacy file scheme. This will result in 26 possible matches, as we do not know the 'build letter' of the file.
+
+    // 'Legacy' file scheme (without build letter):
     // OP5T full: OnePlus5TOxygen_43_OTA_047_all_1902221932_d08e3bef8111.zip
     // OP5T incr: OnePlus5TOxygen_43_OTA_047-048_patch_1904191530_e75889ee94bc4.zip
-    // Groups:
+
+    // Groups legacy:
     // 1: OnePlus device (eg 5T). Not present on OPX.
     // 2: OTA framework version (eg 43)
     // 3: update revision number (eg 028)
     // 4: update build date (eg 1902221932)
-    $regex = '/^OnePlus([A-Za-z0-9]*)Oxygen(?:A?)_([0-9]{2})_OTA_(?:[0-9]*-?)([0-9]{3})_(?:all|patch)_([0-9]*)_(?:.*).zip$/';
+    $legacyRegex = '/^OnePlus([A-Za-z0-9]*)Oxygen(?:A?)_([0-9]{2})_OTA_(?:[0-9]*-?)([0-9]{3})_(?:all|patch)_([0-9]*)_(?:.*).zip$/';
     $matches = array();
 
-    preg_match($regex, $filename, $matches);
-    unset($regex);
+    preg_match($legacyRegex, $filename, $matches);
+    unset($legacyRegex);
 
     if (count($matches) === 5) {
         $results = array();
@@ -44,15 +86,15 @@ function guessOTAVersionFromFilename($filename) {
             $updateRevision = '' . $updateRevision;
         }
 
-        for ($i = 65; $i <= 90; $i++) { // letters 'A' to 'Z'
+        for ($i = 65; $i <= 90; $i++) { // add a possible match for all letters 'A' to 'Z'
             array_push($results,
                 sprintf(
                     'OnePlus%sOxygen_%d.%s.%s_GLO_%s_%d',
                     $matches[1],
                     intval($matches[2]),
                     chr($i),
-                    $updateRevision, // framework version in 2 decimals, e.g. 43).
-                    $matches[3], // framework version in 3 numbers, e.g. 043 instead of 43).
+                    $updateRevision, // update revision in 2 decimals, e.g. 43).
+                    $matches[3], // update revision in 3 numbers, e.g. 043 instead of 43).
                     intval($matches[4])
                 )
             );
