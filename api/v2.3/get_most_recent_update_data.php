@@ -26,6 +26,21 @@ if($device_id != null && $update_method_id != null && $device_id != "" && $updat
         $result["system_is_up_to_date"] = true;
         $result['filename'] = getFilename($result['download_url']);
 
+        // HOTFIX: On app versions <= 2.7.3, limit download size to 2047 MB (2147483647 bytes) as the app would otherwise have an integer overflow.
+        // This was detected by the OnePlus 7 Pro having a full update of 2067 MB.
+        // The fix is only applied to versions 2.7.2 and 2.7.3, as other versions should rarely be in use on the OnePlus 7 Pro
+        if (strpos($_SERVER['HTTP_USER_AGENT'], 'Oxygen_updater_2.7.3') !== FALSE || strpos($_SERVER['HTTP_USER_AGENT'], 'Oxygen_updater_2.7.2') !== FALSE) {
+            $downloadSizeNumeric = intval($result['download_size']);
+            if ($downloadSizeNumeric > 2147483647) {
+                error_log('Reduced download size of update data with OTA version ' . $result['ota_version_number'] . ' to 2047 MB to avoid an integer overflow');
+                $result['description'] .= '
+               
+##Download size
+The download size of this file is ' . ($result['download_size'] / 1048576) . ' MB. Unfortunately, the app cannot currently display values larger than 2047 MB. Please ignore the download size shown below.';
+                $result['download_size'] = '2147483647';
+            }
+        }
+
         echo(json_encode($result));
     }
 
