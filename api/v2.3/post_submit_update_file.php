@@ -76,8 +76,9 @@ if ($timesSubmittedBefore == 0) {
     // If it has never been submitted before, create a new entry for it.
     $query = $database->prepare("INSERT INTO submitted_update_file(`name`, ota_version_number, times_submitted) VALUES (:filename, :ota_version_number, 1)");
 
-    // If the never-submitted-before file is a valid OxygenOS file and is not a match to an existing update, notify the #contributors Discord channel.
-    if ($alreadyExistingOtaVersion == null && $validFilename) {
+    // If the never-submitted-before file is a valid OxygenOS file, notify the #contributors Discord channel.
+    // We also do this for already-matched files, because otherwise files submitted after the update was initially added (e.g. older incremental packages) are missed.
+    if ($validFilename) {
         include '../shared/webhook.php';
 
         // Message author and action URL not available on GitHub.
