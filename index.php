@@ -134,6 +134,9 @@
                 <li>
                     <a class="font-white" href="/faq"><?php text("FAQ") ?></a>
                 </li>
+                <li>
+                    <a class="font-white" href="/legal"><?php text("PRIVACY_POLICY") ?></a>
+                </li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->

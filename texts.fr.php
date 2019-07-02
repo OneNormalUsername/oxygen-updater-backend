@@ -12,6 +12,7 @@ $contents["DOWNLOAD_APP"] = "Télécharger l'App";
 $contents["DOWNLOAD_APP_URL_SUFFIX"] = "&hl=fr";
 $contents["FAQ"] = "FAQ";
 $contents["FAQ_PAGE_TITLE"] = "FAQ - Oxygen Updater";
+$contents["PRIVACY_POLICY"] = "Politique de Confidalite";
 
 // Feature text next to (or above on mobile) the screenshots
 $contents["FEATURE_TITLE"] = "Soyez le premier à mettre à jour";
