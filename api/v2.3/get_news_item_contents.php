@@ -7,6 +7,7 @@ $database = connectToDatabase();
 // Obtain all required request parameters.
 $newsItemId = $_GET["news_item_id"];
 $language = $_GET["language"];
+$theme = $_GET["theme"]; // Light, Dark or "" ("" only on app 2.7.6 and older)
 
 // Execute the query
 if (strtolower($language) === 'nl') {
@@ -18,10 +19,30 @@ if (strtolower($language) === 'nl') {
 $query->bindParam(":id", $newsItemId);
 $query->execute();
 
-
 // Return the output as HTML
 header('Content-type: text/html');
-echo ($query->fetch(PDO::FETCH_ASSOC)['content']);
+$style = "";
+$contents = $query->fetch(PDO::FETCH_ASSOC)['content'];
+
+if ($theme === 'Dark') {
+    $style = "<style>
+                body {
+                  background-color: black;
+                  color: white;
+                }
+              </style>";
+}
+
+echo "
+        <html lang=" . $language . ">
+          <head>
+            ". $style . "
+          </head>
+          <body>
+          " . $contents . "
+          </body>
+        </html>
+    ";
 
 // Disconnect from the database
 $database = null;
