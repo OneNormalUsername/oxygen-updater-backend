@@ -95,13 +95,29 @@
     <?php if($theme === 'Dark') {?>
         <style>
             body {
-                background-color: black;
+                background-color: #121212;
                 color: white;
             }
 
+            a:link:not(.font-white) {
+                color: #f43b46 !important;
+            }
+
+            a:visited {
+                background-color: #f43b46;
+            }
+
+            .panel {
+                border-color: #f43b46 !important;
+            }
+
             .panel-body {
-                background-color: #1E1E1E;
-                border-top-color: #1E1E1E !important;
+                background-color: #1d1d1d;
+                border-top-color: #1d1d1d !important;
+            }
+
+            .panel-heading {
+                background-color: #f43b46 !important;
             }
         </style>
     <?php }?>

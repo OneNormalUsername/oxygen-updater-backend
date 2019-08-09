@@ -27,7 +27,7 @@ $contents = $query->fetch(PDO::FETCH_ASSOC)['content'];
 if ($theme === 'Dark') {
     $style = "<style>
                 body {
-                  background-color: black;
+                  background-color: #121212;
                   color: white;
                 }
                 
