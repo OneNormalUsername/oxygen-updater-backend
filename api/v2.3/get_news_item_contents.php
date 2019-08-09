@@ -30,6 +30,13 @@ if ($theme === 'Dark') {
                   background-color: black;
                   color: white;
                 }
+                
+                /* If clicked on 'black' text color explicitly in news editor then it will add it to inline style.
+                   Override this as well to prevent unreadable text in dark mode
+                  */
+                [style*=\"color: #000000\"] {
+                  color: white !important;
+                }
               </style>";
 }
 
