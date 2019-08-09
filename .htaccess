@@ -9,5 +9,5 @@ RewriteRule ^legal/$ oxygen_updater_privacy_policy_latest.pdf
 RewriteRule ^faq$ faq.php
 RewriteRule ^faq/$ faq.php
 
-RewriteRule ^inappfaq$ in_app_faq.php
-RewriteRule ^inappfaq/$ in_app_faq.php [L]
+RewriteRule ^inappfaq(?:/(Light|Dark))?$ in_app_faq.php?theme=$1
+RewriteRule ^inappfaq(?:/(Light|Dark))?/$ in_app_faq.php?theme=$1 [L]

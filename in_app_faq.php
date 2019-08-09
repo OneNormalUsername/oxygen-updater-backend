@@ -8,6 +8,10 @@
     $lang_ = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) : 'en';
     require_once getTextFileToInclude($lang_, isset($_GET['lang']) ? $_GET['lang'] : null);
 
+    // Theme: Light, Dark or empty (empty only on app versions 2.7.6 and below)
+    $uri = $_SERVER["REQUEST_URI"];
+    $theme = $_GET["theme"];
+
     // HTML Purifier prevents XSS attacks.
     $purifier = initHtmlPurifier();
 
@@ -66,8 +70,18 @@
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
           crossorigin="anonymous">
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/faq.css">
+    <?php if(strpos($uri, 'inappfaq/Light/') !== FALSE || strpos($uri, 'inappfaq/Dark/') !== FALSE) { ?>
+        <link rel="stylesheet" href="../../css/style.css">
+        <link rel="stylesheet" href="../../css/faq.css">
+
+    <?php } else if(strpos($uri, 'inappfaq/') !== FALSE) { ?>
+        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/faq.css">
+
+    <?php } else { ?>
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/faq.css">
+    <?php } ?>
 
     <!-- Javascript -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"
@@ -77,6 +91,20 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
+
+    <?php if($theme === 'Dark') {?>
+        <style>
+            body {
+                background-color: black;
+                color: white;
+            }
+
+            .panel-body {
+                background-color: #1E1E1E;
+                border-top-color: #1E1E1E !important;
+            }
+        </style>
+    <?php }?>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
