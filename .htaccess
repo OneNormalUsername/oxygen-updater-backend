@@ -10,4 +10,7 @@ RewriteRule ^faq$ faq.php
 RewriteRule ^faq/$ faq.php
 
 RewriteRule ^inappfaq(?:/(Light|Dark))?$ in_app_faq.php?theme=$1
-RewriteRule ^inappfaq(?:/(Light|Dark))?/$ in_app_faq.php?theme=$1 [L]
+RewriteRule ^inappfaq(?:/(Light|Dark))?/$ in_app_faq.php?theme=$1
+
+RewriteRule ^team$ team.php
+RewriteRule ^team/$ team.php [L]
