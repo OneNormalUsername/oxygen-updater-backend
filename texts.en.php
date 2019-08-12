@@ -87,3 +87,7 @@ $contents["FAQ_CATEGORY_NAME_DB_COLUMN"] = "english_category_name";
 $contents["FAQ_ITEM_TITLE_DB_COLUMN"] = "english_title";
 $contents["FAQ_ITEM_BODY_DB_COLUMN"] = "english_body";
 
+// Team page: Title
+$contents["TEAM_PAGE_TITLE"] = "Our team - Oxygen Updater";
+$contents["TEAM_PAGE_SUBTITLE"] = "Our team";
+

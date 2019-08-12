@@ -85,3 +85,7 @@ $contents["FAQ_IMPORTANT_EXPL_2"] = " zijn belangrijk om te lezen.";
 $contents["FAQ_CATEGORY_NAME_DB_COLUMN"] = "dutch_category_name";
 $contents["FAQ_ITEM_TITLE_DB_COLUMN"] = "dutch_title";
 $contents["FAQ_ITEM_BODY_DB_COLUMN"] = "dutch_body";
+
+// Team page: Title
+$contents["TEAM_PAGE_TITLE"] = "Ons team - Oxygen Updater";
+$contents["TEAM_PAGE_SUBTITLE"] = "Ons team";
