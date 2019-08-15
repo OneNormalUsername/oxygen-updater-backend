@@ -45,8 +45,8 @@
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
           crossorigin="anonymous">
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/faq.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/faq.css">
 
     <!-- Javascript -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"
@@ -79,7 +79,7 @@
             </button>
 
             <!-- Logo -->
-            <img src="./img/app_icon_small-min.png" class="pull-left logo" alt="Logo">
+            <img src="/img/app_icon_small-min.png" class="pull-left logo" alt="Logo">
 
             <!-- App name -->
             <a class="font-white navbar-brand" href="/"><?php text("APP_NAME") ?></a>
@@ -116,7 +116,7 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-md-offset-1 col-lg-offset-2" style="text-align: center;">
             <!-- https://pixabay.com/vectors/coming-soon-sign-board-3008776/ -->
-            <img src="img/coming_soon.png" style="width: 80%; max-height: 500px;"/>
+            <img src="/img/coming_soon.png" style="width: 80%; max-height: 500px;"/>
         </div>
     </div>
 </div>
