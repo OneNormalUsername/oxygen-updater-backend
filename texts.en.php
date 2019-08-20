@@ -60,8 +60,8 @@ $contents["DEVICE_INFORMATION_ALT"] = "View Device Information";
 $contents["DEVICE_INFORMATION_TITLE"] = "View Device Information";
 $contents["DEVICE_INFORMATION_TEXT"] = "Oxygen Updater allows you to view some of the specifications of your device. See which chipset your device has, the amount of internal memory your device has and which Android / OxygenOS versions you are currently using.";
 
-$contents["DEVICE_SUPPORT_TITLE"] = "Supports all OnePlus devices";
-$contents["DEVICE_SUPPORT_TEXT"] = "Oxygen Updater supports all devices sold by OnePlus. You will get a push notification when a new device is supported. You can disable the push notification if you don't want to get notified.";
+$contents["DEVICE_SUPPORT_TITLE"] = "Supports most OnePlus devices";
+$contents["DEVICE_SUPPORT_TEXT"] = "Oxygen Updater supports most devices sold by OnePlus. You will get a push notification when a new device is supported. You can disable the push notification if you don't want to get notified.";
 
 $contents["NEWS_ALT"] = "Stay informed about OnePlus / OxygenOS";
 $contents["NEWS_TITLE"] = "Stay informed about OnePlus / OxygenOS";
