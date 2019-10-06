@@ -60,7 +60,7 @@ If a new system update is available:
   - `update_method_id`: Database ID of the update method (same as in request)
   - `version_number`: Internal version number of the update
   - `ota_version_number`: Internal version number of the update 
-  - `description`: Changelog of the update. Formatted using OnePlus' markdown variant, needs parsing to be useful. Also contains version number of the update. See [https://github.com/arjanvlek/oxygen-updater/blob/master/app/src/main/java/com/arjanvlek/oxygenupdater/updateinformation/UpdateDescriptionParser.java](https://github.com/arjanvlek/oxygen-updater/blob/master/app/src/main/java/com/arjanvlek/oxygenupdater/updateinformation/UpdateDescriptionParser.java) for an implementation
+  - `description`: Changelog of the update. Formatted using OnePlus' markdown variant, needs parsing to be useful. Also contains version number of the update. See [https://github.com/oxygen-updater/oxygen-updater/blob/master/app/src/main/java/com/arjanvlek/oxygenupdater/updateinformation/UpdateDescriptionParser.java](https://github.com/oxygen-updater/oxygen-updater/blob/master/app/src/main/java/com/arjanvlek/oxygenupdater/updateinformation/UpdateDescriptionParser.java) for an implementation
   - `download_url`: Direct link to download the update from
   - `download_size`: Size of the update file (in bytes, approx. because it is currently input in megabytes)
   - `md5sum`: MD5 Checksum of the update file
@@ -92,7 +92,7 @@ When some update data is present for the given device / update method:
   - `update_method_id`: Database ID of the update method (same as in request)
   - `version_number`: Internal version number of the update
   - `ota_version_number`: Internal version number of the update 
-  - `description`: Changelog of the update. Formatted using OnePlus' markdown variant, needs parsing to be useful. Also contains version number of the update. See [https://github.com/arjanvlek/oxygen-updater/blob/master/app/src/main/java/com/arjanvlek/oxygenupdater/updateinformation/UpdateDescriptionParser.java](https://github.com/arjanvlek/oxygen-updater/blob/master/app/src/main/java/com/arjanvlek/oxygenupdater/updateinformation/UpdateDescriptionParser.java) for an implementation
+  - `description`: Changelog of the update. Formatted using OnePlus' markdown variant, needs parsing to be useful. Also contains version number of the update. See [https://github.com/oxygen-updater/oxygen-updater/blob/master/app/src/main/java/com/arjanvlek/oxygenupdater/updateinformation/UpdateDescriptionParser.java](https://github.com/oxygen-updater/oxygen-updater/blob/master/app/src/main/java/com/arjanvlek/oxygenupdater/updateinformation/UpdateDescriptionParser.java) for an implementation
   - `download_url`: Direct link to download the update from
   - `download_size`: Size of the update file (in bytes, approx. because it is currently input in megabytes)
   - `md5sum`: MD5 Checksum of the update file
@@ -114,7 +114,7 @@ The backend of Oxygen Updater requires:
 ### Obtaining the code:
 The code can be obtained by cloning the `oxygen-updater-backend` project:
 ```
-git clone https://github.com/arjanvlek/oxygen-updater-backend.git
+git clone https://github.com/oxygen-updater/oxygen-updater-backend.git
 ```
 
 ### Setting up the database credentials:
