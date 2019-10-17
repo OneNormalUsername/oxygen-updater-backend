@@ -36,7 +36,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="View all Frequently Asked Questions about the Oxygen Updater app">
     <meta name="keywords" content="FAQ,Oxygen,OnePlus,OxygenOS,OS,Android,AndroidOS,System,Update,Systemupdate,OTA,Flash,Download,Faster,App">
-    <meta name="author" content="Arjan Vlek">
+    <meta name="author" content="Adhiraj Singh Chauhan">
 
     <!-- Page title -->
     <title><?php text('FAQ_PAGE_TITLE') ?></title>
@@ -163,12 +163,12 @@
                         echo "
                             <div class='panel panel-default'>
                                 <div class='panel-heading collapsed' data-toggle='collapse' data-parent='#accordion" . $collapseId . "' href='#collapse" . $collapseId . "'>
-                                    <span class='panel-title'>       
+                                    <span class='panel-title'>
                                         <table class='table-borderless faq-table'>
                                             <tr>
                                                 <td>
                                                     <button class='btn-text glyphicon pull-right" . $importantCssClass . "'></button>
-    
+
                                                 </td>
                                                 <td>
                                                     <button class='btn-text glyphicon toggle-glyphicon pull-right collapsed' data-toggle='collapse' href='#collapse" . $collapseId . "'></button>

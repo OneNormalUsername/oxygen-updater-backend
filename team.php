@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="View information about the team behind the Oxygen Updater app">
     <meta name="keywords" content="Team,Oxygen,OnePlus,OxygenOS,OS,Android,AndroidOS,System,Update,Systemupdate,OTA,Flash,Download,Faster,App">
-    <meta name="author" content="Arjan Vlek">
+    <meta name="author" content="Adhiraj Singh Chauhan">
 
     <!-- Page title -->
     <title><?php text('TEAM_PAGE_TITLE') ?></title>

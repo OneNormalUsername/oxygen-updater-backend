@@ -10,4 +10,4 @@ $contents = array();
 
 $contents['PAGE_TITLE'] = "Oxygen Updater";
 $contents['APP_NAME'] = "Oxygen Updater";
-$contents['AUTHOR_NAME'] = "Arjan Vlek";
+$contents['AUTHOR_NAME'] = "Adhiraj Singh Chauhan";

@@ -37,7 +37,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Oxygen Updater is a free Android app to receive OxygenOS Over The Air (OTA) updates faster. Easy, safe and supports all OnePlus devices!">
     <meta name="keywords" content="Oxygen,OnePlus,OxygenOS,OS,Android,AndroidOS,System,Update,Systemupdate,OTA,Flash,Download,Faster,App">
-    <meta name="author" content="Arjan Vlek">
+    <meta name="author" content="Adhiraj Singh Chauhan">
 
     <!-- Facebook tags -->
     <meta property="og:title" content="Oxygen Updater - Receive OxygenOS system updates faster!">
@@ -46,7 +46,7 @@
 
     <!-- Twitter tags -->
     <meta name="twitter:card" content="app">
-    <meta name="twitter:site" content="@arjanv1995">
+    <meta name="twitter:site" content="@IAmAscii">
     <meta name="twitter:description" content="Oxygen Updater is a free Android app to receive OxygenOS Over The Air (OTA) updates faster. Easy, safe and supports all OnePlus devices!">
     <meta name="twitter:app:name:googleplay" content="Oxygen Updater">
     <meta name="twitter:app:id:googleplay" content="com.arjanvlek.oxygenupdater">
@@ -446,9 +446,7 @@
                 </address>
                 <address>
                     <?php text('FOOTER_DEVELOPED_BY') ?>
-                    <strong><a href="https://www.linkedin.com/in/arjan-vlek-454297129"><?php text('AUTHOR_NAME') ?></a></strong><br>
-                    Tweakers.net: <a href="https://tweakers.net/gallery/418977/">@arjan1995</a><br>
-                    XDA Developers: <a href="https://forum.xda-developers.com/member.php?u=5279372">headsh0t95</a><br>
+                    <strong><a href="https://www.linkedin.com/in/adhirajsinghchauhan"><?php text('AUTHOR_NAME') ?></a></strong><br>
                 </address>
             </div>
         </div>

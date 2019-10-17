@@ -1,6 +1,6 @@
 # Deployable image of the Oxygen Updater Backend. Suitable for use in production
 FROM php:7.2.12-apache
-MAINTAINER arjan vlek
+MAINTAINER Adhiraj Singh Chauhan
 
 # The Apache web server listens at port 80
 EXPOSE 80
@@ -63,4 +63,3 @@ RUN cd /var/www/html; \
     rm composer.lock; \
     rm composer.phar; \
     rm install-composer.sh
-
