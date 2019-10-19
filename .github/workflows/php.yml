@@ -54,7 +54,7 @@ jobs:
     needs: package
     env:
       STAGING_DIR: ~/staging/oxygen/website
-      PRODUCTION_DIR: /apps/oxygen/website/live-backup/
+      PRODUCTION_DIR: /apps/oxygen/website/live/
       ARTIFACT_NAME: website.tgz
     steps:
     - name: Download build artifact
