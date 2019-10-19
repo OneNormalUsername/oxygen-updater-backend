@@ -1,0 +1,83 @@
+name: PHP Composer
+on:
+  push:
+    branches:
+    - master
+    paths:
+    - api/**
+    - css/**
+    - fonts/**
+    - img/**
+    - .well-known/assetlinks.json
+    - browserconfig.xml
+    - favicon.ico
+    - manifest.json
+    - app-ads.txt
+    - robots.txt
+    - '**.htaccess'
+    - '**.html'
+    - '**.css'
+    - '**.js'
+    - '**.php'
+    - '**.xml'
+    - '**.png'
+    - '**.svg'
+    - '**.pdf'
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    env:
+      ARTIFACT_NAME: website.tgz
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
+
+    - name: Install dependencies using Composer
+      run: composer install --prefer-dist --no-progress --no-suggest
+
+    - name: Bundle relevant files into gzipped tar
+      # create a gzipped tar which preserves file permissions
+      run: |
+        mkdir build
+        tar -pcvzf build/$ARTIFACT_NAME -X tar-exclude.lst .
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: $ARTIFACT_NAME
+        path: build
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: package
+    env:
+      STAGING_DIR: ~/staging/oxygen/website
+      PRODUCTION_DIR: /apps/oxygen/website/live-backup/
+      ARTIFACT_NAME: website.tgz
+    steps:
+    - name: Download build artifact
+      uses: actions/download-artifact@v1
+      with:
+        name: $ARTIFACT_NAME
+        path: build
+
+    - name: Setup SSH keys
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+
+    - name: Send build artifact to server
+      run: |
+        ssh adhirajsinghchauhan_gmail_com@oxygenupdater.com "mkdir -p $STAGING_DIR; cd $STAGING_DIR && rm *.tgz -f"
+        scp build/$ARTIFACT_NAME adhirajsinghchauhan_gmail_com@oxygenupdater.com:$STAGING_DIR
+
+    - name: Promote files from staging to production
+      # delete everything except symlinks,
+      # then unpack the gzipped tar
+      run: |
+        ssh adhirajsinghchauhan_gmail_com@oxygenupdater.com "cd $PRODUCTION_DIR && sudo find . \( -type f -o -type d \) -delete"
+        ssh adhirajsinghchauhan_gmail_com@oxygenupdater.com "sudo tar -pxvzf $STAGING_DIR/$ARTIFACT_NAME -C $PRODUCTION_DIR"

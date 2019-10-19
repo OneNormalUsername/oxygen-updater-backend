@@ -1,5 +1,7 @@
 # Oxygen Updater (backend)
 
+![PHP Composer](https://github.com/oxygen-updater/oxygen-updater-backend/workflows/PHP%20Composer/badge.svg)
+
 Backend for the oxygen updater app.
 
 This repository contains the following:
@@ -62,5 +64,3 @@ That contains a webserver, PHP and a mysql / mariadb database. You'll have to lo
 
 ## Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md)
-
-
