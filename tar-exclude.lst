@@ -1,0 +1,13 @@
+./.git*
+./.idea
+./deployment
+./build
+./LICENSE
+./Dockerfile*
+./composer.*
+./*.md
+./*.yml
+./*.sql
+./*.conf
+./*.docx
+./tar-exclude.lst
