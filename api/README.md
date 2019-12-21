@@ -8,12 +8,15 @@ This is the server-level API. It is used for hosting:
 - available update for a given device / update method / base version (update data)
 - latest available system update for a given device / update method
 
-### Version 2.3 (current)
-The current version is `v2.3`. This version is deployed at `https://oxygenupdater.com/api/v2.3`
+### Version 2.4 (current)
+The current version is `v2.4`. This version is deployed at `https://oxygenupdater.com/api/v2.4`
 Available requests:
 
-#### GET /devices
+#### GET /devices/{filter}
 Returns a list of all supported devices.
+
+Request parameters: 
+  - `filter`: One of 'all', 'enabled', or 'disabled'
 
 Response: <Array of>
   - id: Database ID of the device
@@ -137,4 +140,3 @@ git clone https://github.com/oxygen-updater/oxygen-updater-backend.git
 ### Testing the API
 - You should be able to navigate to `<your_domain_name>/api/v1/devices` and see a list of all the devices.
 - If this does not work or if you are not using Apache, then navigate to `<your_domain_name>/api/v1/get_devices.php`.
-
