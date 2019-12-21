@@ -54,7 +54,7 @@ jobs:
     needs: package
     env:
       STAGING_DIR: ~/staging/oxygen/website
-      PRODUCTION_DIR: /apps/oxygen/website/live2/
+      PRODUCTION_DIR: /apps/oxygen/website/live/
       INSTALL_GUIDE_IMAGES_DIR: /apps/oxygen/website/install-guide-images
       NEWS_IMAGES_DIR: /apps/oxygen/website/news-images
       ARTIFACT_NAME: website.tgz
