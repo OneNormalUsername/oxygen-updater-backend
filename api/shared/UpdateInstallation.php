@@ -15,40 +15,43 @@ class UpdateInstallation
 
     public function __construct($inputData)
     {
-        if (empty($inputData["installationId"]) || $inputData["installationId"] === "<UNKNOWN>") {
-            throw new InvalidArgumentException("installationID must be set to a valid value. Got: [" . $inputData["installationId"] . "]");
+        $installationId = $inputData["installationId"] ?? $inputData["installation_id"];
+        if (empty($installationId) || $installationId === "<UNKNOWN>") {
+            throw new InvalidArgumentException("installationId must be set to a valid value. Got: [" . $installationId . "]");
         }
 
-        if (empty($inputData["deviceId"]) || $inputData["deviceId"] === -1) {
-            throw new InvalidArgumentException("deviceID must be set to a valid value. Got: [" . $inputData["deviceId"] . "]");
+        $deviceId = $inputData["deviceId"] ?? $inputData["device_id"];
+        if (empty($deviceId) || $deviceId === -1) {
+            throw new InvalidArgumentException("deviceId must be set to a valid value. Got: [" . $deviceId . "]");
         }
 
-        if (empty($inputData["updateMethodId"]) || $inputData["updateMethodId"] === -1) {
-            throw new InvalidArgumentException("updateMethodId must be set to a valid value. Got: [" . $inputData["updateMethodId"] . "]");
+        $updateMethodId = $inputData["updateMethodId"] ?? $inputData["update_method_id"];
+        if (empty($updateMethodId) || $updateMethodId === -1) {
+            throw new InvalidArgumentException("updateMethodId must be set to a valid value. Got: [" . $updateMethodId . "]");
         }
 
-        $this->installationId = $inputData["installationId"];
-        $this->deviceId = $inputData["deviceId"];
-        $this->updateMethodId = $inputData["updateMethodId"];
-        $this->status = $inputData["installationStatus"];
+        $this->installationId = $installationId;
+        $this->deviceId = $deviceId;
+        $this->updateMethodId = $updateMethodId;
+        $this->status = $inputData["installationStatus"] ?? $inputData["installation_status"];
 
-        switch ($inputData["installationStatus"]) {
+        switch ($this->status) {
             case "STARTED" :
                 $this->startDate = $inputData["timestamp"];
-                $this->startOsVersion = $inputData["startOsVersion"];
-                $this->destinationOsVersion = $inputData["destinationOsVersion"];
+                $this->startOsVersion = $inputData["startOsVersion"] ?? $inputData["start_os_version"];
+                $this->destinationOsVersion = $inputData["destinationOsVersion"] ?? $inputData["destination_os_version"];
                 break;
             case "FINISHED":
                 $this->lastUpdatedDate = $inputData["timestamp"];
-                $this->currentOsVersion = $inputData["currentOsVersion"];
+                $this->currentOsVersion = $inputData["currentOsVersion"] ?? $inputData["current_os_version"];
                 break;
             case "FAILED":
                 $this->lastUpdatedDate = $inputData["timestamp"];
-                $this->currentOsVersion = $inputData["currentOsVersion"];
-                $this->failureReason = $inputData["failureReason"];
+                $this->currentOsVersion = $inputData["currentOsVersion"] ?? $inputData["current_os_version"];
+                $this->failureReason = $inputData["failureReason"] ?? $inputData["failure_reason"];
                 break;
             default:
-                throw new InvalidArgumentException("installationStatus must be set to a valid value. Got: [" . $inputData["installationStatus"] . "]");
+                throw new InvalidArgumentException("installationStatus must be set to a valid value. Got: [" . $this->status . "]");
         }
     }
 
