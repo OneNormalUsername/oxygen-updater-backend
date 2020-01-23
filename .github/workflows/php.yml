@@ -84,7 +84,7 @@ jobs:
       run: |
         ssh adhirajsinghchauhan_gmail_com@oxygenupdater.com "cd $PRODUCTION_DIR && sudo find . \( -type f -o -type d -empty \) -delete"
         ssh adhirajsinghchauhan_gmail_com@oxygenupdater.com "sudo tar -pxvzf $STAGING_DIR/$ARTIFACT_NAME -C $PRODUCTION_DIR"
-        ssh root@cyanogenupdatetracker.com "sudo cp -a $PRODUCTION_DIR/img/installGuide/. $INSTALL_GUIDE_IMAGES_DIR"
-        ssh root@cyanogenupdatetracker.com "sudo cp -a $PRODUCTION_DIR/img/news/. $NEWS_IMAGES_DIR"
+        ssh adhirajsinghchauhan_gmail_com@oxygenupdater.com "sudo cp -a $PRODUCTION_DIR/img/installGuide/. $INSTALL_GUIDE_IMAGES_DIR"
+        ssh adhirajsinghchauhan_gmail_com@oxygenupdater.com "sudo cp -a $PRODUCTION_DIR/img/news/. $NEWS_IMAGES_DIR"
         ssh adhirajsinghchauhan_gmail_com@oxygenupdater.com "sudo rm -rf $PRODUCTION_DIR/img/installGuide && sudo ln -s $INSTALL_GUIDE_IMAGES_DIR $PRODUCTION_DIR/img/installGuide"
         ssh adhirajsinghchauhan_gmail_com@oxygenupdater.com "sudo rm -rf $PRODUCTION_DIR/img/news && sudo ln -s $NEWS_IMAGES_DIR $PRODUCTION_DIR/img/news"
