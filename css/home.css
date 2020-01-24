@@ -126,6 +126,11 @@ body {
   .thumbnail {
     min-height: 500px;
   }
+
+  .desktop-supported-device-list {
+    max-height: 400px;
+    overflow: auto;
+  }
 }
 @media (max-width: 767px) {
   .feature-title {

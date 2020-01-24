@@ -256,8 +256,9 @@
                                     </td>
                                     <td width="50%">
                                         <!-- Supported devices -->
-                                        <div class="text-center font-white p-l-15 p-r-15">
+                                        <div class="text-center font-white p-l-15 p-r-15 desktop-supported-device-list">
                                             <h4><b><?php text('SUPPORTED_DEVICES_TITLE') ?></b></h4>
+                                            <h5 style="margin-bottom: 15px; margin-top: 15px;"><?php text('SUPPORTED_DEVICES_SCROLL') ?> </h5>
                                             <h5>
                                                 <?php
                                                 if(isset($db_devices)) {
