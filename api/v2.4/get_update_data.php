@@ -40,14 +40,13 @@ if($device_id != null && $update_method_id != null && $device_id != "" && $updat
                 // Message author and action URL not available on GitHub.
                 $authorName = getenv('MISSING_UPDATE_VERSIONS_WEBHOOK_AUTHOR_NAME');
                 $messageActionUrl = getenv('MISSING_UPDATE_VERSIONS_WEBHOOK_ACTION_URL');
-                $webhookMessageDetails = make_webhook_embed(
-                    'Oxygen Updater',
-                    'https://oxygenupdater.com',
+                $webhookEmbed = make_webhook_embed(
+                    make_webhook_author(),
                     'New update version spotted',
-                    'The following version (OTA) was detected: ' . $parent_version_number,
-                    $authorName,
                     $messageActionUrl,
-                    'https://oxygenupdater.com/img/news/app_icon-min.png'
+                    'The following version (OTA) was detected: ' . $parent_version_number,
+                    make_webhook_footer($authorName),
+                    'https://cdn4.iconfinder.com/data/icons/digital-design-bluetone-set-2/91/Digital__Design_72-512.png'
                 );
 
                 // webhook URL not available on GitHub to prevent abuse
@@ -55,7 +54,7 @@ if($device_id != null && $update_method_id != null && $device_id != "" && $updat
                 make_webhook_call(
                     $webhookUrl,
                     'New update version spotted: ' . $parent_version_number,
-                    $webhookMessageDetails
+                    $webhookEmbed
                 );
             }
 
@@ -66,7 +65,7 @@ if($device_id != null && $update_method_id != null && $device_id != "" && $updat
             $incrementOperatingSystemVersionUsageQuery->execute();
         }
     }
-    
+
     // Find update data
     $query = $database->prepare("SELECT * FROM update_data WHERE device_id = :device_id AND update_method_id = :update_method_id AND parent_version_number = :parent_version_number");
     $query->bindParam(':device_id', $device_id);
@@ -98,7 +97,7 @@ if($device_id != null && $update_method_id != null && $device_id != "" && $updat
             if ($downloadSizeNumeric > 2147483647) {
                 error_log('Reduced download size of update data with OTA version ' . $result['ota_version_number'] . ' to 2047 MB to avoid an integer overflow');
                 $result['description'] .= '
-               
+
 ##Download size
 The download size of this file is ' . ($result['download_size'] / 1048576) . ' MB. Unfortunately, the app cannot currently display values larger than 2047 MB. Please ignore the download size shown below.';
                 $result['download_size'] = '2147483647';

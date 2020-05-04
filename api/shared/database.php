@@ -5,12 +5,12 @@
  * @return PDO Database connection
  */
 function connectToDatabase() {
-    $username = getenv("DATABASE_USER");
-    $password = getenv("DATABASE_PASS");
-    $server_address = getenv("DATABASE_HOST");
-    $database_name = getenv("DATABASE_NAME");
-    $database = new PDO('mysql:host='.$server_address.';dbname='.$database_name.'',$username, $password);
+    $databaseUsername = getenv("DATABASE_USER");
+    $databasePassword = getenv("DATABASE_PASS");
+    $databaseHost = getenv("DATABASE_HOST");
+    $databaseName = getenv("DATABASE_NAME");
+    $databasePort = getenv('DATABASE_PORT');
+    $database = new PDO('mysql:host=' . $databaseHost . ';port=' . $databasePort . ';dbname=' . $databaseName . '', $databaseUsername, $databasePassword);
     $database->query('SET CHARACTER SET utf8');
     return $database;
 }
-

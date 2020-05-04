@@ -8,8 +8,8 @@ This is the server-level API. It is used for hosting:
 - available update for a given device / update method / base version (update data)
 - latest available system update for a given device / update method
 
-### Version 2.4 (current)
-The current version is `v2.4`. This version is deployed at `https://oxygenupdater.com/api/v2.4`
+### Version 2.5 (current)
+The current version is `v2.5`. This version is deployed at `https://oxygenupdater.com/api/v2.5`
 Available requests:
 
 #### GET /devices/{filter}

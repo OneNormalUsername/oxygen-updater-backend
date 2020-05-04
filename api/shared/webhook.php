@@ -1,6 +1,10 @@
 <?php
 
-function make_webhook_call($webhookUrl, $text, ...$embeds) {
+function make_webhook_call(
+    $webhookUrl,
+    $content,
+    ...$embeds
+) {
     //------------------------------
     // Create webhook headers
     //------------------------------
@@ -12,7 +16,7 @@ function make_webhook_call($webhookUrl, $text, ...$embeds) {
     // Create webhook POST body
     //------------------------------
     $body = new stdClass();
-    $body->content = $text;
+    $body->content = strlen($content <= 2000) ? $content : (substr($content, 0, 1996) . ' ...'); // Limit content to 2000 characters
 
     if (isset($embeds) && is_array($embeds)) {
         $body->embeds = $embeds;
@@ -62,34 +66,116 @@ function make_webhook_call($webhookUrl, $text, ...$embeds) {
     curl_close($ch);
 }
 
-function make_webhook_embed($authorName, $authorUrl, $contentTitle, $contentDescription, $footerText, $contentUrl, $thumbnailUrl) {
+function make_webhook_embed(
+    $author,
+    $title,
+    $titleUrl,
+    $description,
+    $footer,
+    $thumbnailUrl = null,
+    $color = null,
+    ...$fields
+) {
     //------------------------------
     // Creates a webhook Embed object
     //------------------------------
-    $result = new stdClass();
+    $embed = new stdClass();
 
-    if ($authorName && $authorUrl) {
-        $result->author = new stdClass();
-        $result->author->name = $authorName;
-        $result->author->url = $authorUrl;
+    if ($author) {
+        $embed->author = $author;
     }
 
-    $result->title = $contentTitle;
-    $result->description = strlen($contentDescription < 100) ? $contentDescription : (substr($contentDescription, 0, 100) . ' ...'); // Limit content text to 100 characters
+    $embed->title = strlen($title <= 256) ? $title : (substr($title, 0, 252) . ' ...'); // Limit title to 256 characters
+    $embed->description = strlen($description <= 2048) ? $description : (substr($description, 0, 2044) . ' ...'); // Limit description to 2048 characters
 
-    if ($contentUrl) {
-        $result->url = $contentUrl;
+    if ($titleUrl) {
+        $embed->url = $titleUrl;
     }
 
     if ($thumbnailUrl) {
-        $result->thumbnail = new stdClass();
-        $result->thumbnail->url = $thumbnailUrl;
+        $embed->thumbnail = new stdClass();
+        $embed->thumbnail->url = $thumbnailUrl;
     }
 
-    if ($footerText) {
-        $result->footer = new stdClass();
-        $result->footer->text = $footerText;
+    if ($footer) {
+        $embed->footer = $footer;
     }
 
-    return $result;
+    if ($color) {
+        // Discord accepts only integer colours
+        if (!is_numeric($color)) {
+            // Assume $color was hex, and convert to int
+            $color = hexdec($color);
+        }
+
+        $embed->color = $color;
+    }
+
+    if (isset($fields) && is_array($fields) && array_filter($fields)) {
+        $embed->fields = $fields;
+    }
+
+    return $embed;
+}
+
+function make_webhook_author(
+    $name = 'Oxygen Updater',
+    $url = 'https://oxygenupdater.com',
+    $iconUrl = 'https://github.com/oxygen-updater.png'
+) {
+    if ($name) {
+        $author = new stdClass();
+        $author->name = strlen($name <= 256) ? $name : (substr($name, 0, 252) . ' ...'); // Limit author name to 256 characters
+
+        if ($url) {
+            $author->url = $url;
+        }
+
+        if ($iconUrl) {
+            $author->icon_url = $iconUrl;
+        }
+
+        return $author;
+    }
+
+    return null;
+}
+
+function make_webhook_footer(
+    $text,
+    $iconUrl = null
+) {
+    if ($text) {
+        $footer = new stdClass();
+        $footer->text = strlen($text <= 2048) ? $text : (substr($text, 0, 2044) . ' ...'); // Limit footer text to 2048 characters
+
+        if ($iconUrl) {
+            $footer->icon_url = $iconUrl;
+        }
+
+        return $footer;
+    }
+
+    return null;
+}
+
+function make_webhook_field(
+    $name,
+    $value,
+    $inline = false
+) {
+    if ($name && $value) {
+        //------------------------------
+        // Creates a webhook Field object
+        //------------------------------
+        $field = new stdClass();
+
+        $field->name = strlen($name <= 256) ? $name : (substr($name, 0, 252) . ' ...'); // Limit name to 256 characters
+        $field->value = strlen($value <= 1024) ? $value : (substr($value, 0, 1020) . ' ...'); // Limit value to 1024 characters
+        $field->inline = $inline;
+
+        return $field;
+    }
+
+    return null;
 }

@@ -1,0 +1,53 @@
+Options +FollowSymlinks
+RewriteEngine on
+
+RewriteRule ^allUpdateMethods$ get_all_update_methods.php
+RewriteRule ^allUpdateMethods/$ get_all_update_methods.php
+
+RewriteRule ^devices$ get_devices.php
+RewriteRule ^devices/(?:(all|enabled|disabled|))$ get_devices.php?filter=$1
+
+RewriteRule ^installGuide/([-0-9]+)/([-0-9]+)/([0-5]+)?$ get_install_guide.php?device_id=$1&update_method_id=$2&page_number=$3
+RewriteRule ^installGuide/([-0-9]+)/([-0-9]+)/([0-5]+)/?$ get_install_guide.php?device_id=$1&update_method_id=$2&page_number=$3
+
+RewriteRule ^log$ post_app_log.php
+RewriteRule ^log/$ post_app_log.php
+
+RewriteRule ^log-update-installation$ post_root_install_log.php
+RewriteRule ^log-update-installation/$ post_root_install_log.php
+
+RewriteRule ^mostRecentUpdateData/([-0-9]+)/([-0-9]+)?$ get_most_recent_update_data.php?device_id=$1&update_method_id=$2
+RewriteRule ^mostRecentUpdateData/([-0-9]+)/([-0-9]+)/?$ get_most_recent_update_data.php?device_id=$1&update_method_id=$2
+
+RewriteRule ^news/([-0-9]+)/([-0-9]+)?$ get_news.php?device_id=$1&update_method_id=$2
+RewriteRule ^news/([-0-9]+)/([-0-9]+)/?$ get_news.php?device_id=$1&update_method_id=$2
+
+RewriteRule ^news-item/([-0-9]+)?$ get_news_item.php?news_item_id=$1
+RewriteRule ^news-item/([-0-9]+)/?$ get_news_item.php?news_item_id=$1
+
+RewriteRule ^news-content/([-0-9]+)/(EN|NL)(?:/(Light|Dark))?$ get_news_item_contents.php?news_item_id=$1&language=$2&theme=$3
+RewriteRule ^news-content/([-0-9]+)/(EN|NL)(?:/(Light|Dark))?/$ get_news_item_contents.php?news_item_id=$1&language=$2&theme=$3
+
+RewriteRule ^news-read$ post_news_read.php
+RewriteRule ^news-read/$ post_news_read.php
+
+RewriteRule ^serverMessages/([-0-9]+)/([-0-9]+)?$ get_server_messages.php?device_id=$1&update_method_id=$2
+RewriteRule ^serverMessages/([-0-9]+)/([-0-9]+)/?$ get_server_messages.php?device_id=$1&update_method_id=$3
+
+RewriteRule ^serverStatus$ get_server_status.php
+RewriteRule ^serverStatus/$ get_server_status.php
+
+RewriteRule ^submit-update-file$ post_submit_update_file.php
+RewriteRule ^submit-update-file/$ post_submit_update_file.php
+
+RewriteRule ^log-download-error$ post_log_download_error.php
+RewriteRule ^log-download-error/$ post_log_download_error.php
+
+RewriteRule ^updateData/([-0-9]+)/([-0-9]+)/(.*)?$ get_update_data.php?device_id=$1&update_method_id=$2&parent_version_number=$3
+RewriteRule ^updateData/([-0-9]+)/([-0-9]+)/(.*)/?$ get_update_data.php?device_id=$1&update_method_id=$2&parent_version_number=$3
+
+RewriteRule ^updateMethods/([-0-9]+)?$ get_update_methods.php?device_id=$1
+RewriteRule ^updateMethods/([-0-9]+)/?$ get_update_methods.php?device_id=$1
+
+RewriteRule ^verify-purchase$ post_verify_purchase.php
+RewriteRule ^verify-purchase/$ post_verify_purchase.php

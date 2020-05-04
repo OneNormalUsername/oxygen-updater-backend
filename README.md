@@ -14,7 +14,6 @@ This repository does *not* contain:
 - Admin portal (coming soon w/Docker)
 - News image uploader for admins (coming soon, needs a few security adjustments)
 - Real-time installation dashboard (my React.js sample project, may be added or maybe not)
-- Automatic update fetching scripts which were used to grab updates from OnePlus. (will never be added)
 
 ## Running / building it
 
@@ -64,3 +63,5 @@ That contains a webserver, PHP and a mysql / mariadb database. You'll have to lo
 
 ## Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md)
+
+Note: In case you get an error saying `/vendor/ezyang/htmlpurifier/library/HTMLPurifier/DefinitionCache/Serializer.php` is not writeable, `chmod` it to 777; stop and think. 777-ing it is a very bad practice, as it basically grants the world full access to those files. `chown` it to `www-data` instead.

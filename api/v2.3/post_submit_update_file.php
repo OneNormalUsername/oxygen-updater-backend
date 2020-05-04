@@ -84,14 +84,14 @@ if ($timesSubmittedBefore == 0) {
         // Message author and action URL not available on GitHub.
         $authorName = getenv('SUBMITTED_UPDATE_FILE_WEBHOOK_AUTHOR_NAME');
         $messageActionUrl = getenv('SUBMITTED_UPDATE_FILE_WEBHOOK_ACTION_URL');
-        $webhookMessageDetails = make_webhook_embed(
-            'Oxygen Updater',
-            'https://oxygenupdater.com',
+        $webhookEmbed = make_webhook_embed(
+            make_webhook_author(),
             'New update file submitted',
-            'The following new update file has been submitted: ' . $filename,
-            $authorName,
             $messageActionUrl,
-            'https://oxygenupdater.com/img/news/app_icon-min.png'
+            'The following new update file has been submitted: ' . $filename,
+            make_webhook_footer($authorName),
+            'https://cdn1.iconfinder.com/data/icons/finance-and-taxation/64/submit-document-file-send-512.png',
+            '4caf50'
         );
 
         // webhook URL not available on GitHub to prevent abuse
@@ -99,7 +99,7 @@ if ($timesSubmittedBefore == 0) {
         make_webhook_call(
             $webhookUrl,
             'New update file submitted: ' . $filename,
-            $webhookMessageDetails
+            $webhookEmbed
         );
     }
 

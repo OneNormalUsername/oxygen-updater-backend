@@ -76,7 +76,8 @@ function connectToDatabase()
         $databasePassword = getenv('DATABASE_PASS');
         $databaseHost = getenv('DATABASE_HOST');
         $databaseName = getenv('DATABASE_NAME');
-        $database = new PDO('mysql:host=' . $databaseHost . ';dbname=' . $databaseName . '', $databaseUsername, $databasePassword);
+        $databasePort = getenv('DATABASE_PORT');
+        $database = new PDO('mysql:host=' . $databaseHost . ';port=' . $databasePort . ';dbname=' . $databaseName . '', $databaseUsername, $databasePassword);
         $database->query('SET CHARACTER SET utf8');
         return $database;
     } catch (Exception $e) {
