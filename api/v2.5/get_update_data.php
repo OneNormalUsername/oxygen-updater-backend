@@ -6,6 +6,8 @@ include '../shared/filename.php';
 $device_id = $_GET["device_id"];
 $update_method_id = $_GET["update_method_id"];
 $parent_version_number = $_GET["parent_version_number"];
+$isEuBuild = $json['isEuBuild'];
+$appVersion = $json['appVersion'] ?? '<UNKNOWN>';
 
 // Set the return type to JSON.
 header('Content-type: application/json');
@@ -40,20 +42,39 @@ if($device_id != null && $update_method_id != null && $device_id != "" && $updat
                 // Message author and action URL not available on GitHub.
                 $authorName = getenv('MISSING_UPDATE_VERSIONS_WEBHOOK_AUTHOR_NAME');
                 $messageActionUrl = getenv('MISSING_UPDATE_VERSIONS_WEBHOOK_ACTION_URL');
+
+                $webhookField1 = make_webhook_field(
+                    'EU Build?',
+                    $isEuBuild ? 'Yes' : 'No',
+                    true
+                );
+                $webhookField2 = make_webhook_field(
+                    'App Version',
+                    "[$appVersion](https://github.com/oxygen-updater/oxygen-updater/releases/tag/oxygen-updater-$appVersion)",
+                    true
+                );
+
+                $prefix = $isEuBuild ? 'This is an EU build.' : '';
+
                 $webhookEmbed = make_webhook_embed(
                     make_webhook_author(),
-                    'New update version spotted',
+                    'New OTA version spotted',
                     $messageActionUrl,
-                    'The following version (OTA) was detected: ' . $parent_version_number,
+            "$prefix
+```properties
+$parent_version_number
+```",
                     make_webhook_footer($authorName),
-                    'https://cdn4.iconfinder.com/data/icons/digital-design-bluetone-set-2/91/Digital__Design_72-512.png'
+                    'https://cdn4.iconfinder.com/data/icons/digital-design-bluetone-set-2/91/Digital__Design_72-512.png',
+                    null,
+                    $webhookField1, $webhookField2
                 );
 
                 // webhook URL not available on GitHub to prevent abuse
                 $webhookUrl = getenv('MISSING_UPDATE_VERSIONS_WEBHOOK_URL');
                 make_webhook_call(
                     $webhookUrl,
-                    'New update version spotted: ' . $parent_version_number,
+                    null,
                     $webhookEmbed
                 );
             }

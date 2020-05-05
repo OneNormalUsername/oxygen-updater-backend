@@ -17,6 +17,8 @@ $json = json_decode(file_get_contents('php://input'), true);
 
 $filename = $json['filename'];
 $isEuBuild = $json['isEuBuild'];
+$appVersion = $json['appVersion'] ?? '<UNKNOWN>';
+$deviceName = $json['deviceName'] ?? '<UNKNOWN>';
 
 // Check if a file name has been set. If not, throw a HTTP 400 Bad Request error.
 if (empty($filename)) {
@@ -32,7 +34,6 @@ if (!$validFilename) {
     echo json_encode(array("success" => false, "error_message" => "E_FILE_INVALID"));
     die();
 }
-
 
 // remove temporary suffixes from the filename. These may be added when the file is not fully downloaded on the user's phone at submission time.
 $filename = str_replace('~', '', $filename);
@@ -85,21 +86,44 @@ if ($timesSubmittedBefore == 0) {
         // Message author and action URL not available on GitHub.
         $authorName = getenv('SUBMITTED_UPDATE_FILE_WEBHOOK_AUTHOR_NAME');
         $messageActionUrl = getenv('SUBMITTED_UPDATE_FILE_WEBHOOK_ACTION_URL');
+
+        $webhookField1 = make_webhook_field(
+            'Device Name',
+            $deviceName,
+            true
+        );
+        $webhookField2 = make_webhook_field(
+            'EU Build?',
+            $isEuBuild ? 'Yes' : 'No',
+            true
+        );
+        $webhookField3 = make_webhook_field(
+            'App Version',
+            "[$appVersion](https://github.com/oxygen-updater/oxygen-updater/releases/tag/oxygen-updater-$appVersion)",
+            true
+        );
+
+        $prefix = $isEuBuild ? 'This was submitted from a device that ran an EU build.' : '';
+
         $webhookEmbed = make_webhook_embed(
             make_webhook_author(),
-            'New update file submitted',
+            'New OTA filename submitted',
             $messageActionUrl,
-            'The following new update file has been submitted: ' . $filename,
+            "$prefix
+```yaml
+$filename
+```",
             make_webhook_footer($authorName),
             'https://cdn1.iconfinder.com/data/icons/finance-and-taxation/64/submit-document-file-send-512.png',
-            '4caf50'
+            '4caf50',
+            $webhookField1, $webhookField2, $webhookField3
         );
 
         // webhook URL not available on GitHub to prevent abuse
         $webhookUrl = getenv('SUBMITTED_UPDATE_FILE_WEBHOOK_URL');
         make_webhook_call(
             $webhookUrl,
-            'New update file submitted: ' . $filename . ($isEuBuild ? ' **(EU)**' : ''),
+            null,
             $webhookEmbed
         );
     }

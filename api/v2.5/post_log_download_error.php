@@ -21,8 +21,8 @@ $version = $json['version'];
 $otaVersion = $json['otaVersion'];
 $httpCode = $json['httpCode'];
 $httpMessage = $json['httpMessage'];
-$appVersion = $json['appVersion'];
-$deviceName = $json['deviceName'];
+$appVersion = $json['appVersion'] ?? '<UNKNOWN>';
+$deviceName = $json['deviceName'] ?? '<UNKNOWN>';
 
 // Check if appVersion has been set. If not, throw a HTTP 400 Bad Request error.
 if (empty($appVersion)) {
@@ -73,14 +73,15 @@ if ($timesSeenBefore == 0) {
     );
     $webhookField3 = make_webhook_field(
         'Download URL',
-        "$url"
+        $url
     );
 
     $webhookEmbed = make_webhook_embed(
         make_webhook_author(),
         'New download error spotted',
         null,
-        "Check the URL and fix update data on [admin portal]($messageActionUrl) if required. Relevant metadata:
+        "Spotted a new download error. This could probably mean the download link is invalid - meaning either someone made a mistake while adding update data, or OnePlus pulled/removed the file.
+Check the URL and fix update data on [admin portal]($messageActionUrl) if required. Relevant metadata:
 ```yaml
      device: $deviceName
     version: $version
@@ -98,7 +99,7 @@ ota-version: $otaVersion
     $webhookUrl = getenv('DOWNLOAD_ERROR_WEBHOOK_URL');
     make_webhook_call(
         $webhookUrl,
-        'Spotted a new download error. This could probably mean the download link is invalid - meaning either someone made a mistake while adding update data, or OnePlus pulled/removed the file.',
+        null,
         $webhookEmbed
     );
 } else {

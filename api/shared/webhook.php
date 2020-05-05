@@ -16,10 +16,19 @@ function make_webhook_call(
     // Create webhook POST body
     //------------------------------
     $body = new stdClass();
-    $body->content = strlen($content <= 2000) ? $content : (substr($content, 0, 1996) . ' ...'); // Limit content to 2000 characters
+    if ($content) {
+        $body->content = strlen($content <= 2000) ? $content : (substr($content, 0, 1996) . ' ...'); // Limit content to 2000 characters
+    }
 
     if (isset($embeds) && is_array($embeds)) {
-        $body->embeds = $embeds;
+        $embeds = array_filter($embeds);
+
+        if ($embeds) {
+            // `array_filter` does not reindex the array, so we must wrap it in `array_values`
+            // e.g. If the original array was (0:null, 1:object, 2:null, 3:object),
+            // `array_filter` would return (1:object, 3:object) which is obviously stupid af. But that's PHP for you.
+            $body->embeds = array_values($embeds);
+        }
     }
 
     //------------------------------
@@ -111,8 +120,15 @@ function make_webhook_embed(
         $embed->color = $color;
     }
 
-    if (isset($fields) && is_array($fields) && array_filter($fields)) {
-        $embed->fields = $fields;
+    if (isset($fields) && is_array($fields)) {
+        $fields = array_filter($fields);
+
+        if ($fields) {
+            // `array_filter` does not reindex the array, so we must wrap it in `array_values`
+            // e.g. If the original array was (0:null, 1:object, 2:null, 3:object),
+            // `array_filter` would return (1:object, 3:object) which is obviously stupid af. But that's PHP for you.
+            $embed->fields = array_values($fields);
+        }
     }
 
     return $embed;

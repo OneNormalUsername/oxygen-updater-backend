@@ -32,7 +32,6 @@ if (!$validFilename) {
     die();
 }
 
-
 // remove temporary suffixes from the filename. These may be added when the file is not fully downloaded on the user's phone at submission time.
 $filename = str_replace('~', '', $filename);
 $filename = str_replace('.tmp', '', $filename);
@@ -86,9 +85,11 @@ if ($timesSubmittedBefore == 0) {
         $messageActionUrl = getenv('SUBMITTED_UPDATE_FILE_WEBHOOK_ACTION_URL');
         $webhookEmbed = make_webhook_embed(
             make_webhook_author(),
-            'New update file submitted',
+            'New OTA filename submitted',
             $messageActionUrl,
-            'The following new update file has been submitted: ' . $filename,
+            "```yaml
+$filename
+```",
             make_webhook_footer($authorName),
             'https://cdn1.iconfinder.com/data/icons/finance-and-taxation/64/submit-document-file-send-512.png',
             '4caf50'
@@ -98,7 +99,7 @@ if ($timesSubmittedBefore == 0) {
         $webhookUrl = getenv('SUBMITTED_UPDATE_FILE_WEBHOOK_URL');
         make_webhook_call(
             $webhookUrl,
-            'New update file submitted: ' . $filename,
+            null,
             $webhookEmbed
         );
     }

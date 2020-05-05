@@ -33,7 +33,6 @@ if (!$validFilename) {
     die();
 }
 
-
 // remove temporary suffixes from the filename. These may be added when the file is not fully downloaded on the user's phone at submission time.
 $filename = str_replace('~', '', $filename);
 $filename = str_replace('.tmp', '', $filename);
@@ -85,21 +84,34 @@ if ($timesSubmittedBefore == 0) {
         // Message author and action URL not available on GitHub.
         $authorName = getenv('SUBMITTED_UPDATE_FILE_WEBHOOK_AUTHOR_NAME');
         $messageActionUrl = getenv('SUBMITTED_UPDATE_FILE_WEBHOOK_ACTION_URL');
+
+        $webhookField1 = make_webhook_field(
+            'EU Build?',
+            $isEuBuild ? 'Yes' : 'No',
+            true
+        );
+
+        $prefix = $isEuBuild ? 'This was submitted from a device that ran an EU build.' : '';
+
         $webhookEmbed = make_webhook_embed(
             make_webhook_author(),
-            'New update file submitted',
+            'New OTA filename submitted',
             $messageActionUrl,
-            'The following new update file has been submitted: ' . $filename,
+            "$prefix
+```yaml
+$filename
+```",
             make_webhook_footer($authorName),
             'https://cdn1.iconfinder.com/data/icons/finance-and-taxation/64/submit-document-file-send-512.png',
-            '4caf50'
+            '4caf50',
+            $webhookField1
         );
 
         // webhook URL not available on GitHub to prevent abuse
         $webhookUrl = getenv('SUBMITTED_UPDATE_FILE_WEBHOOK_URL');
         make_webhook_call(
             $webhookUrl,
-            'New update file submitted: ' . $filename . ($isEuBuild ? ' **(EU)**' : ''),
+            null,
             $webhookEmbed
         );
     }

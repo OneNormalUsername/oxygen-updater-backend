@@ -42,9 +42,11 @@ if($device_id != null && $update_method_id != null && $device_id != "" && $updat
                 $messageActionUrl = getenv('MISSING_UPDATE_VERSIONS_WEBHOOK_ACTION_URL');
                 $webhookEmbed = make_webhook_embed(
                     make_webhook_author(),
-                    'New update version spotted',
+                    'New OTA version spotted',
                     $messageActionUrl,
-                    'The following version (OTA) was detected: ' . $parent_version_number,
+            "```properties
+$parent_version_number
+```",
                     make_webhook_footer($authorName),
                     'https://cdn4.iconfinder.com/data/icons/digital-design-bluetone-set-2/91/Digital__Design_72-512.png'
                 );
@@ -53,7 +55,7 @@ if($device_id != null && $update_method_id != null && $device_id != "" && $updat
                 $webhookUrl = getenv('MISSING_UPDATE_VERSIONS_WEBHOOK_URL');
                 make_webhook_call(
                     $webhookUrl,
-                    'New update version spotted: ' . $parent_version_number,
+                    null,
                     $webhookEmbed
                 );
             }
