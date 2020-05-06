@@ -6,8 +6,8 @@ include '../shared/filename.php';
 $device_id = $_GET["device_id"];
 $update_method_id = $_GET["update_method_id"];
 $parent_version_number = $_GET["parent_version_number"];
-$isEuBuild = $json['isEuBuild'];
-$appVersion = $json['appVersion'] ?? '<UNKNOWN>';
+$isEuBuild = $_GET['isEuBuild'];
+$appVersion = $_GET['appVersion'] ?? '<UNKNOWN>';
 
 // Set the return type to JSON.
 header('Content-type: application/json');

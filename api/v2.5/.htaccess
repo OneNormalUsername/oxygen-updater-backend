@@ -43,8 +43,9 @@ RewriteRule ^submit-update-file/$ post_submit_update_file.php
 RewriteRule ^log-download-error$ post_log_download_error.php
 RewriteRule ^log-download-error/$ post_log_download_error.php
 
-RewriteRule ^updateData/([-0-9]+)/([-0-9]+)/(.*)?$ get_update_data.php?device_id=$1&update_method_id=$2&parent_version_number=$3
-RewriteRule ^updateData/([-0-9]+)/([-0-9]+)/(.*)/?$ get_update_data.php?device_id=$1&update_method_id=$2&parent_version_number=$3
+# QSA: Query String Append. v2.5 onwards appended `isEuBuild` and `appVersion` query params, that need to be forwarded to the rewrite
+RewriteRule ^updateData/([-0-9]+)/([-0-9]+)/(.*)?$ get_update_data.php?device_id=$1&update_method_id=$2&parent_version_number=$3 [QSA]
+RewriteRule ^updateData/([-0-9]+)/([-0-9]+)/(.*)/?$ get_update_data.php?device_id=$1&update_method_id=$2&parent_version_number=$3 [QSA]
 
 RewriteRule ^updateMethods/([-0-9]+)?$ get_update_methods.php?device_id=$1
 RewriteRule ^updateMethods/([-0-9]+)/?$ get_update_methods.php?device_id=$1
