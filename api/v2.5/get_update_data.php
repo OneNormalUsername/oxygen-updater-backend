@@ -6,7 +6,7 @@ include '../shared/filename.php';
 $device_id = $_GET["device_id"];
 $update_method_id = $_GET["update_method_id"];
 $parent_version_number = $_GET["parent_version_number"];
-$isEuBuild = $_GET['isEuBuild'];
+$isEuBuild = filter_var($_GET['isEuBuild'], FILTER_VALIDATE_BOOLEAN);
 $appVersion = $_GET['appVersion'] ?? '<UNKNOWN>';
 
 // Set the return type to JSON.
