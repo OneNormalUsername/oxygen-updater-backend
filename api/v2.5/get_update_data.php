@@ -6,6 +6,8 @@ include '../shared/filename.php';
 $device_id = $_GET["device_id"];
 $update_method_id = $_GET["update_method_id"];
 $parent_version_number = $_GET["parent_version_number"];
+$osVersion = $_GET['osVersion'] ?? '<UNKNOWN>';
+$osType = $_GET['osType'] ?? '<UNKNOWN>';
 $isEuBuild = filter_var($_GET['isEuBuild'], FILTER_VALIDATE_BOOLEAN);
 $appVersion = $_GET['appVersion'] ?? '<UNKNOWN>';
 
@@ -44,11 +46,21 @@ if($device_id != null && $update_method_id != null && $device_id != "" && $updat
                 $messageActionUrl = getenv('MISSING_UPDATE_VERSIONS_WEBHOOK_ACTION_URL');
 
                 $webhookField1 = make_webhook_field(
+                    'OS Version',
+                    $osVersion,
+                    true
+                );
+                $webhookField2 = make_webhook_field(
+                    'OS Type',
+                    $osType,
+                    true
+                );
+                $webhookField3 = make_webhook_field(
                     'EU Build?',
                     $isEuBuild ? 'Yes' : 'No',
                     true
                 );
-                $webhookField2 = make_webhook_field(
+                $webhookField4 = make_webhook_field(
                     'App Version',
                     "[$appVersion](https://github.com/oxygen-updater/oxygen-updater/releases/tag/oxygen-updater-$appVersion)",
                     true
@@ -61,13 +73,13 @@ if($device_id != null && $update_method_id != null && $device_id != "" && $updat
                     'New OTA version spotted',
                     $messageActionUrl,
             "$prefix
-```properties
+```css
 $parent_version_number
 ```",
                     make_webhook_footer($authorName),
                     'https://cdn4.iconfinder.com/data/icons/digital-design-bluetone-set-2/91/Digital__Design_72-512.png',
                     null,
-                    $webhookField1, $webhookField2
+                    $webhookField1, $webhookField2, $webhookField3, $webhookField4
                 );
 
                 // webhook URL not available on GitHub to prevent abuse

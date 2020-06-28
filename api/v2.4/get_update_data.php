@@ -44,7 +44,7 @@ if($device_id != null && $update_method_id != null && $device_id != "" && $updat
                     make_webhook_author(),
                     'New OTA version spotted',
                     $messageActionUrl,
-            "```properties
+            "```css
 $parent_version_number
 ```",
                     make_webhook_footer($authorName),

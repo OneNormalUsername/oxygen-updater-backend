@@ -22,7 +22,8 @@ $otaVersion = $json['otaVersion'];
 $httpCode = $json['httpCode'];
 $httpMessage = $json['httpMessage'];
 $appVersion = $json['appVersion'] ?? '<UNKNOWN>';
-$deviceName = $json['deviceName'] ?? '<UNKNOWN>';
+$chosenDeviceName = $json['deviceName'] ?? '<UNKNOWN>';
+$actualDeviceName = $json['actualDeviceName'] ?? '<UNKNOWN>';
 
 // Check if appVersion has been set. If not, throw a HTTP 400 Bad Request error.
 if (empty($appVersion)) {
@@ -83,10 +84,11 @@ if ($timesSeenBefore == 0) {
         "Spotted a new download error. This could probably mean the download link is invalid - meaning either someone made a mistake while adding update data, or OnePlus pulled/removed the file.
 Check the URL and fix update data on [admin portal]($messageActionUrl) if required. Relevant metadata:
 ```yaml
-     device: $deviceName
-    version: $version
-ota-version: $otaVersion
-   filename: $filename
+actual-device: $actualDeviceName
+chosen-device: $chosenDeviceName
+      version: $version
+  ota-version: $otaVersion
+     filename: $filename
 ```",
         make_webhook_footer($authorName),
         null,

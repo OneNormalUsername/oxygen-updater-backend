@@ -86,7 +86,7 @@ if ($timesSubmittedBefore == 0) {
         $messageActionUrl = getenv('SUBMITTED_UPDATE_FILE_WEBHOOK_ACTION_URL');
 
         $webhookField1 = make_webhook_field(
-            'EU Build?',
+            'Probably EU Build?',
             $isEuBuild ? 'Yes' : 'No',
             true
         );

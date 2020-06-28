@@ -18,7 +18,8 @@ $json = json_decode(file_get_contents('php://input'), true);
 $filename = $json['filename'];
 $isEuBuild = $json['isEuBuild'];
 $appVersion = $json['appVersion'] ?? '<UNKNOWN>';
-$deviceName = $json['deviceName'] ?? '<UNKNOWN>';
+$chosenDeviceName = $json['deviceName'] ?? '<UNKNOWN>';
+$actualDeviceName = $json['actualDeviceName'] ?? '<UNKNOWN>';
 
 // Check if a file name has been set. If not, throw a HTTP 400 Bad Request error.
 if (empty($filename)) {
@@ -88,16 +89,21 @@ if ($timesSubmittedBefore == 0) {
         $messageActionUrl = getenv('SUBMITTED_UPDATE_FILE_WEBHOOK_ACTION_URL');
 
         $webhookField1 = make_webhook_field(
-            'Device Name',
-            $deviceName,
+            'Actual Device Name',
+            $actualDeviceName,
             true
         );
         $webhookField2 = make_webhook_field(
-            'EU Build?',
-            $isEuBuild ? 'Yes' : 'No',
+            'Chosen Device Name',
+            $chosenDeviceName,
             true
         );
         $webhookField3 = make_webhook_field(
+            'Probably EU Build?',
+            $isEuBuild ? 'Yes' : 'No',
+            true
+        );
+        $webhookField4 = make_webhook_field(
             'App Version',
             "[$appVersion](https://github.com/oxygen-updater/oxygen-updater/releases/tag/oxygen-updater-$appVersion)",
             true
@@ -116,7 +122,7 @@ $filename
             make_webhook_footer($authorName),
             'https://cdn1.iconfinder.com/data/icons/finance-and-taxation/64/submit-document-file-send-512.png',
             '4caf50',
-            $webhookField1, $webhookField2, $webhookField3
+            $webhookField1, $webhookField2, $webhookField3, $webhookField4
         );
 
         // webhook URL not available on GitHub to prevent abuse
