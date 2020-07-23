@@ -59,6 +59,54 @@ function guessOTAVersionFromFilename($filename) {
         );
     }
 
+    // If not matched, try Nord file scheme. This will result in 2 possible matches, as we do not know the 'build letter' of the file (E: Europe, I: India)
+
+    // 'Nord' file scheme (without build letter):
+    // Nord full: NordOxygen_14_OTA_004_all_2007170032_c357304482c23.zip
+    // Nord incr: NordOxygen_14_OTA_003-004_patch_2007170032_b1aea92.zip
+
+    // Groups Nord:
+    // 1: OTA framework version (eg 43)
+    // 2: update revision number (eg 028)
+    // 3: update build date (eg 1902221932)
+
+    $nordRegex = '/^NordOxygen(?:A?)_([0-9]{2})_OTA_(?:[0-9]*-?)([0-9]{3})_(?:all|patch)_([0-9]*)_(?:.*).zip$/';
+    $matches = array();
+
+    preg_match($nordRegex, $filename, $matches);
+    unset($nordRegex);
+
+    if (count($matches) === 4) {
+        $results = array();
+
+        $updateRevision = intval($matches[2]);
+        if ($updateRevision < 10) {
+            $updateRevision = '0' . $updateRevision;
+        } else {
+            $updateRevision = '' . $updateRevision;
+        }
+
+        array_push($results,
+            sprintf(
+                'NordOxygen_%d.E.%s_GLO_%s_%d',
+                intval($matches[1]),
+                $updateRevision, // update revision in 2 decimals, e.g. 43).
+                $matches[2], // update revision in 3 numbers, e.g. 043 instead of 43).
+                intval($matches[3])
+            ),
+            sprintf(
+                'NordOxygen_%d.I.%s_GLO_%s_%d',
+                intval($matches[1]),
+                $updateRevision, // update revision in 2 decimals, e.g. 43).
+                $matches[2], // update revision in 3 numbers, e.g. 043 instead of 43).
+                intval($matches[3])
+            )
+        );
+
+        unset($matches);
+        return $results;
+    }
+
     // If not matched, try legacy file scheme. This will result in 26 possible matches, as we do not know the 'build letter' of the file.
 
     // 'Legacy' file scheme (without build letter):
