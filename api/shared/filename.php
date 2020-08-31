@@ -86,22 +86,18 @@ function guessOTAVersionFromFilename($filename) {
             $updateRevision = '' . $updateRevision;
         }
 
-        array_push($results,
-            sprintf(
-                'NordOxygen_%d.E.%s_GLO_%s_%d',
-                intval($matches[1]),
-                $updateRevision, // update revision in 2 decimals, e.g. 43).
-                $matches[2], // update revision in 3 numbers, e.g. 043 instead of 43).
-                intval($matches[3])
-            ),
-            sprintf(
-                'NordOxygen_%d.I.%s_GLO_%s_%d',
-                intval($matches[1]),
-                $updateRevision, // update revision in 2 decimals, e.g. 43).
-                $matches[2], // update revision in 3 numbers, e.g. 043 instead of 43).
-                intval($matches[3])
-            )
-        );
+        for ($i = 65; $i <= 90; $i++) { // add a possible match for all letters 'A' to 'Z'
+            array_push($results,
+                sprintf(
+                    'NordOxygen_%d.%s.%s_GLO_%s_%d',
+                    intval($matches[1]),
+                    chr($i),
+                    $updateRevision, // update revision in 2 decimals, e.g. 43).
+                    $matches[2], // update revision in 3 numbers, e.g. 043 instead of 43).
+                    intval($matches[3])
+                )
+            );
+        }
 
         unset($matches);
         return $results;
