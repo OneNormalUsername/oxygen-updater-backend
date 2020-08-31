@@ -31,7 +31,11 @@ $query->execute();
 
 // Return the output as HTML
 header('Content-type: text/html');
-$style = "";
+$style = "<style>
+            body {
+              font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Roboto\", \"Helvetica Neue\", Arial, sans-serif;
+            }
+          </style>";
 $result = $query->fetch(PDO::FETCH_ASSOC);
 $title = $result['title'];
 $description = $result['description'];
@@ -40,14 +44,15 @@ $contents = $result['content'];
 if ($theme === 'Dark') {
     $style = "<style>
                 body {
+                  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Roboto\", \"Helvetica Neue\", Arial, sans-serif;
                   background-color: #121212;
                   color: white;
                 }
-                
+
                 a {
                   color: #64b5f6;
                 }
-                
+
                 /* If clicked on 'black' text color explicitly in news editor then it will add it to inline style.
                    Override this as well to prevent unreadable text in dark mode
                   */
