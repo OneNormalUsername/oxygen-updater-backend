@@ -29,7 +29,7 @@ $autoRenewing = array_key_exists('autoRenewing', $json) ? boolval($json['autoRen
 
 // Purchases MUST contain an order id containing "GPA". Otherwise the purchase is not valid (and won't show up in Play Console either).
 if(strpos($orderId, 'GPA') === FALSE) {
-    $purchaseState = 1; // Mark the invalid purchase as being cancelled. I still want to save it though, so I can see how many invalid / hacked purchases are being made.
+    $purchaseState = 3; // Mark the invalid purchase as being cancelled. I still want to save it though, so I can see how many invalid / hacked purchases are being made.
 }
 
 
@@ -60,7 +60,7 @@ try {
     die();
 }
 
-// If the purchase is not valid, don't grand the ad-free permission to the user. Server validation has failed...
+// If the purchase is not valid, don't grant the ad-free permission to the user. Server validation has failed...
 if(strpos($orderId, 'GPA') === FALSE) {
     echo json_encode(array("success" => false, "error_message" => "Purchase is not a valid Google Play Apps purchase (GPA)."));
     die();
@@ -76,4 +76,3 @@ if ($query->rowCount() > 0) {
 
 // Disconnect from the database.
 $database = null;
-

@@ -24,32 +24,50 @@ $developerPayload = $json['developerPayload'];
 $purchaseToken = array_key_exists('token', $json) ? $json['token'] : $json['purchaseToken'];
 $purchaseSignature = array_key_exists('purchaseSignature', $json) ? $json['purchaseSignature'] : '';
 $purchaseTime = intval($json['purchaseTime']);
-$amount = array_key_exists('amount', $json) ? $json['amount'] : '_____';
+$amount = $json['amount'] ?? '_____';
 $autoRenewing = array_key_exists('autoRenewing', $json) ? boolval($json['autoRenewing']) : false;
 
 // Purchases MUST contain an order id containing "GPA". Otherwise the purchase is not valid (and won't show up in Play Console either).
 if(strpos($orderId, 'GPA') === FALSE) {
-    $purchaseState = 1; // Mark the invalid purchase as being cancelled. I still want to save it though, so I can see how many invalid / hacked purchases are being made.
+    $purchaseState = 3; // Mark the invalid purchase as being rejected. I still want to save it though, so I can see how many invalid / hacked purchases are being made.
 }
 
 //Establish a database connection
 $database = connectToDatabase();
 $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// Store the purchase details in the database.
-$query = $database->prepare("INSERT INTO purchase(order_id, package_name, product_id, purchase_type, item_type, purchase_state, developer_payload, purchase_token, purchase_signature, purchase_time, auto_renewing, amount) VALUES (:order_id, :package_name, :product_id, :purchase_type, :item_type, :purchase_state, :developer_payload, :purchase_token, :purchase_signature, :purchase_time, :auto_renewing, :amount)");
-$query->bindParam(':order_id', $orderId);
-$query->bindParam(':package_name', $packageName);
-$query->bindParam(':product_id', $productId);
-$query->bindParam(':purchase_type', $purchaseType);
-$query->bindParam(':item_type', $itemType);
-$query->bindParam(':purchase_state', $purchaseState);
-$query->bindParam(':developer_payload', $developerPayload);
-$query->bindParam(':purchase_token', $purchaseToken);
-$query->bindParam(':purchase_signature', $purchaseSignature);
-$query->bindParam(':purchase_time', $purchaseTime, PDO::PARAM_INT);
-$query->bindParam(':auto_renewing', $autoRenewing, PDO::PARAM_BOOL);
-$query->bindParam(':amount', $amount);
+// Check if this is an existing purchase: match against order_id
+$existingPurchaseQuery = $database->prepare("SELECT * FROM purchase WHERE order_id = :order_id ORDER BY id LIMIT 1");
+$existingPurchaseQuery->bindParam(':order_id', $orderId);
+$existingPurchaseQuery->execute();
+
+if ($existingPurchaseQuery->rowCount() == 0) {
+    // Store the purchase details in the database.
+    $query = $database->prepare("INSERT INTO purchase(order_id, package_name, product_id, purchase_type, item_type, purchase_state, developer_payload, purchase_token, purchase_signature, purchase_time, auto_renewing, amount) VALUES (:order_id, :package_name, :product_id, :purchase_type, :item_type, :purchase_state, :developer_payload, :purchase_token, :purchase_signature, :purchase_time, :auto_renewing, :amount)");
+    $query->bindParam(':order_id', $orderId);
+    $query->bindParam(':package_name', $packageName);
+    $query->bindParam(':product_id', $productId);
+    $query->bindParam(':purchase_type', $purchaseType);
+    $query->bindParam(':item_type', $itemType);
+    $query->bindParam(':purchase_state', $purchaseState);
+    $query->bindParam(':developer_payload', $developerPayload);
+    $query->bindParam(':purchase_token', $purchaseToken);
+    $query->bindParam(':purchase_signature', $purchaseSignature);
+    $query->bindParam(':purchase_time', $purchaseTime, PDO::PARAM_INT);
+    $query->bindParam(':auto_renewing', $autoRenewing, PDO::PARAM_BOOL);
+    $query->bindParam(':amount', $amount);
+} else {
+    // Else, update relevant fields
+    $query = $database->prepare("UPDATE purchase SET purchase_state = :purchase_state, developer_payload = :developer_payload, purchase_token = :purchase_token, purchase_signature = :purchase_signature, purchase_time = :purchase_time, auto_renewing = :auto_renewing, amount = :amount WHERE order_id = :order_id");
+    $query->bindParam(':order_id', $orderId);
+    $query->bindParam(':purchase_state', $purchaseState);
+    $query->bindParam(':developer_payload', $developerPayload);
+    $query->bindParam(':purchase_token', $purchaseToken);
+    $query->bindParam(':purchase_signature', $purchaseSignature);
+    $query->bindParam(':purchase_time', $purchaseTime, PDO::PARAM_INT);
+    $query->bindParam(':auto_renewing', $autoRenewing, PDO::PARAM_BOOL);
+    $query->bindParam(':amount', $amount);
+}
 
 try {
     $query->execute();
@@ -59,7 +77,7 @@ try {
     die();
 }
 
-// If the purchase is not valid, don't grand the ad-free permission to the user. Server validation has failed...
+// If the purchase is not valid, don't grant the ad-free permission to the user. Server validation has failed...
 if(strpos($orderId, 'GPA') === FALSE) {
     echo json_encode(array("success" => false, "error_message" => "Purchase is not a valid Google Play Apps purchase (GPA)."));
     die();
@@ -75,4 +93,3 @@ if ($query->rowCount() > 0) {
 
 // Disconnect from the database.
 $database = null;
-
