@@ -35,6 +35,12 @@ $style = "<style>
             body {
               font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Roboto\", \"Helvetica Neue\", Arial, sans-serif;
             }
+
+            blockquote {
+              border-left: 2px solid rgba(0,0,0,.12);
+              margin-left: 1.5rem;
+              padding-left: 1rem;
+            }
           </style>";
 $result = $query->fetch(PDO::FETCH_ASSOC);
 $title = $result['title'];
@@ -47,6 +53,12 @@ if ($theme === 'Dark') {
                   font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Roboto\", \"Helvetica Neue\", Arial, sans-serif;
                   background-color: #121212;
                   color: white;
+                }
+
+                blockquote {
+                  border-left: 2px solid rgba(255,255,255,.12);
+                  margin-left: 1.5rem;
+                  padding-left: 1rem;
                 }
 
                 a {
