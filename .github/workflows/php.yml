@@ -24,11 +24,15 @@ on:
     - '**.svg'
     - '**.pdf'
 
+env:
+  USERNAME: ${{ secrets.SSH_PRODUCTION_USERNAME }}
+  HOST: ${{ secrets.SSH_PRODUCTION_HOST }}
+  STAGING_DIR_PATH: ${{ secrets.SSH_PRODUCTION_STAGING_DIR_PREFIX }}website
+  ARTIFACT_NAME: website.tgz
+
 jobs:
   package:
     runs-on: ubuntu-latest
-    env:
-      ARTIFACT_NAME: website.tgz
     steps:
     - uses: actions/checkout@v2
 
@@ -50,9 +54,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: package
-    env:
-      STAGING_DIR_PATH: ${{ secrets.SSH_STAGING_DIR_PREFIX }}website
-      ARTIFACT_NAME: website.tgz
     steps:
     - name: Download build artifact
       uses: actions/download-artifact@v2
@@ -69,5 +70,5 @@ jobs:
 
     - name: Send build artifact to server
       run: |
-        ssh github@oxygenupdater.com "mkdir -p $STAGING_DIR_PATH; cd $STAGING_DIR_PATH && rm *.tgz -f"
-        scp build/$ARTIFACT_NAME github@oxygenupdater.com:$STAGING_DIR_PATH
+        ssh $USERNAME@$HOST "mkdir -p $STAGING_DIR_PATH; cd $STAGING_DIR_PATH && rm *.tgz -f"
+        scp build/$ARTIFACT_NAME $USERNAME@$HOST:$STAGING_DIR_PATH
