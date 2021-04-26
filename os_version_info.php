@@ -60,12 +60,6 @@ foreach($devices as $device) {
     }
 }
 
-/*
- * Determine missing versions from the database.
- */
-
-$missingVersionsInDatabase = $db->query('select version_number, times_found from vw_missing_update_data order by version_number');
-
 $db = null;
 ?>
 
@@ -142,40 +136,6 @@ $db = null;
                     <tr>
                         <td style="padding-left: 15px;">' . $item . '</td>
                         <td style="padding-right: 15px;">' . $version . '</td>
-                    </tr>
-                    ';
-                    }
-
-                    ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Missing OS versions widget -->
-<div class="row" style="margin-top: 25px; margin-bottom: 250px;">
-    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h2 style="font-weight: bold;" class="panel-title">OxygenOS versions which are missing in the app</h2>
-            </div>
-            <div class="panel-body" style="padding: 0">
-                <table style="margin-bottom: 0; display: table; padding-left: 15px; padding-right: 15px;" class="table table-condensed table-striped">
-                    <thead>
-                    <tr style="font-weight: bold;">
-                        <td style="padding-left: 15px;" width="60%">OTA version number</td>
-                        <td style="padding-right: 15px;" width="40%"># App launches with this version</td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                    foreach($missingVersionsInDatabase as $missingVersion) {
-                        echo '
-                    <tr>
-                        <td style="padding-left: 15px; word-break:break-all;">' . $missingVersion['version_number'] . '</td>
-                        <td style="padding-right: 15px;">' . $missingVersion['times_found'] . '</td>
                     </tr>
                     ';
                     }
