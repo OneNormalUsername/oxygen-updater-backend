@@ -2,6 +2,9 @@
 
 require_once 'base.php';
 
+// HTML Purifier prevents XSS attacks.
+$purifier = initHtmlPurifier();
+
 $db = connectToDatabase();
 
 // Matches stable OOS update version numbers
@@ -134,8 +137,8 @@ $db = null;
                     foreach($currentVersionsInDatabase as $item => $version) {
                         echo '
                     <tr>
-                        <td style="padding-left: 15px;">' . $item . '</td>
-                        <td style="padding-right: 15px;">' . $version . '</td>
+                        <td style="padding-left: 15px;">' . $purifier->purify($item) . '</td>
+                        <td style="padding-right: 15px;">' . $purifier->purify($version) . '</td>
                     </tr>
                     ';
                     }
