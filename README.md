@@ -1,8 +1,8 @@
 # Oxygen Updater (backend)
 
-![PHP Composer](https://github.com/oxygen-updater/oxygen-updater-backend/workflows/PHP%20Composer/badge.svg)
+![PHP Composer][ci-badge]
 
-Backend for the oxygen updater app.
+Backend for the Oxygen Updater app.
 
 This repository contains the following:
 - All APIs used by the app
@@ -25,7 +25,7 @@ That will launch the following:
 
 - The website is available at `localhost:8000`
 - The FAQ pages are available at `localhost:8000/faq` and `localhost:8000/inappfaq`
-- The APIs are available at `localhost:8000/api` (current is /v2.3 but all previous versions are available as well)
+- The APIs are available at `localhost:8000/api` (current is /v2.6 but all previous versions are available as well)
 - A page containing info about the latest OS versions in the database and missing OS versions is available at `localhost:8000/os-version-info`
 
 Also, a PHPMyAdmin is spawned at `localhost:8183` so you can perform operations on the database.
@@ -62,6 +62,28 @@ If you do *not* have Docker, you'll need a "LAMP server" or "WAMP server" applic
 That contains a webserver, PHP and a mysql / mariadb database. You'll have to load `database.sql` in there and place all contents of the repository in the web root folder. Also make sure the Apache "Headers" and "Rewrite" modules are active, and that the PHP "JSON", "PDO" and "mysqli" modules are installed.
 
 ## Contributing
-See [CONTRIBUTING.md](CONTRIBUTING.md)
+See [CONTRIBUTING.md][contributing]
 
 Note: In case you get an error saying `/vendor/ezyang/htmlpurifier/library/HTMLPurifier/DefinitionCache/Serializer.php` is not writeable, `chmod` it to 777; stop and think. 777-ing it is a very bad practice, as it basically grants the world full access to those files. `chown` it to `www-data` instead.
+
+## License
+This repository has no license. Default copyright laws apply, as mentioned in GitHub's ["Licensing a repository" page][github-licensing-info]:
+> [...] Without a license, the default copyright laws apply, meaning that you retain all rights to your source code and no one may reproduce, distribute, or create derivative works from your work. [...].
+
+For legal purposes, the owner of this organization (Adhiraj Singh Chauhan) is to be considered as the owner of this project, and all its associated files and build outputs (APKs, AABs, etc.). Contributors of this project agree to transfer copyrights to the owner of this organization, with some exceptions:
+- Code owners share ownership of that file, and are entitled to the same copyright laws as the owner of the organization.  
+  Code owners are usually marked with the `@author` annotation on a class/method/variable.
+- If any source file within this repository has license information as part of the file, that license overrides.
+
+This means that you are not permitted to redistribute and/or modify both the source code of this project, and the relevant build outputs without our explicit permission.
+You can contact us on [our official Discord server][discord], or over [email][support-email].
+
+You can still view/fork this repository, submit PRs, and/or raise issues. This is in accordance of GitHub's Terms of Service:
+> [...] If you publish your source code in a public repository on GitHub, according to the [Terms of Service][github-tos], other GitHub users have the right to view and fork your repository within the GitHub site. [...]
+
+[ci-badge]: https://github.com/oxygen-updater/oxygen-updater-backend/workflows/PHP%20Composer/badge.svg
+[contributing]: ./CONTRIBUTING.md
+[github-licensing-info]: https://help.github.com/en/github/creating-cloning-and-archiving-repositories/licensing-a-repository#choosing-the-right-license
+[discord]: https://discord.gg/5TXdhKJ
+[support-email]: mailto:support@oxygenupdater.com?subject=Legal%20request%20for%20Oxygen%20Updater
+[github-tos]: https://help.github.com/en/articles/github-terms-of-service
