@@ -28,24 +28,31 @@ if (empty($filename)) {
     die();
 }
 
-// Check if the filename is a '.zip' file and if the filename contains the word 'Oxygen'. If not, do not store it in the database and return to the app that we don't need this file.
-$validFilename = strpos($filename, 'Oxygen') !== FALSE && strpos($filename, '.zip') !== FALSE;
+// If the filename is invalid (i.e. not a ZIP file or doesn't contain "Oxygen"), this response
+// is sent to the app to indicate that the file they submitted is invalid and thus not needed.
+$invalidFileResponse = json_encode(array("success" => false, "error_message" => "E_FILE_INVALID"));
 
-if (!$validFilename) {
-    echo json_encode(array("success" => false, "error_message" => "E_FILE_INVALID"));
+if (strpos($filename, '.zip') === FALSE) {
+    echo $invalidFileResponse;
+    // Additional processing (sending webhooks or inserting in DB) shouldn't be done because it's not a ZIP
     die();
 }
 
+$responseAlreadySent = false;
+
+if (strpos($filename, 'Oxygen') === FALSE) {
+    // If we reach this point it's a guarantee that it's a ZIP file, but it doesn't contain "Oxygen".
+    // So, send the invalid file response...
+    echo $invalidFileResponse;
+    // ...and make sure another response isn't sent (other `echo` calls are wrapped with a simple if-false check)
+    $responseAlreadySent = true;
+    // ... but don't `die()` here, because even though this file doesn't contain "Oxygen", it still is a ZIP.
+    // We need to be aware of any filename changes OnePlus may have implemented (e.g. 8-series Open Beta 11
+    // on 17th June 2021 switched to ota-manual-sg.allawnofs.com where files are named as hyphened GUIDs).
+}
+
 // remove temporary suffixes from the filename. These may be added when the file is not fully downloaded on the user's phone at submission time.
-$filename = str_replace('~', '', $filename);
-$filename = str_replace('.tmp', '', $filename);
-$filename = str_replace('.tar', '', $filename);
-$filename = str_replace('.jar', '', $filename);
-$filename = str_replace('.gz', '', $filename);
-$filename = str_replace('.crdownload', '', $filename);
-$filename = str_replace('(1)', '', $filename);
-$filename = str_replace('(2)', '', $filename);
-$filename = str_replace(' ', '', $filename);
+$filename = str_replace(['~', '.tmp', '.tar', '.jar', '.gz', '.crdownload', '(1)', '(2)', ' '],'',$filename);
 
 // The filename is part of the Download URL. One would say, that by checking against all stored download URLs, we can see if we already have the submitted file.
 // However, as we only store download URLs of the latest builds, it is impossible to see if an older-submitted update file has already been added to the app.
@@ -149,4 +156,6 @@ $errorMessage = $query->rowCount() === 0 ? 'Error storing submitted update file'
 // Disconnect from the database
 unset($database);
 
-echo json_encode(array("success" => $success, "error_message" => $errorMessage));
+if (!$responseAlreadySent) {
+    echo json_encode(array("success" => $success, "error_message" => $errorMessage));
+}
