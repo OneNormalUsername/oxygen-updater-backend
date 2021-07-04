@@ -100,7 +100,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: arjanvlek/oxygen-updater-backend:latest
+        image: oxygen-updater/oxygen-updater-backend:latest
         env:
         - name: TZ
           value: Europe/Amsterdam

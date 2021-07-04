@@ -1,22 +1,22 @@
 {
-    "name": "arjanvlek/oxygen-updater-website",
+    "name": "oxygen-updater/oxygen-updater-backend",
     "description": "Website for the Oxygen Updater app",
     "type": "project",
     "require": {
-        "ezyang/htmlpurifier": "4.9.3",
+        "ezyang/htmlpurifier": "^4.13.0",
         "ext-pdo": "*",
         "ext-json": "*",
         "ext-curl": "*",
         "ext-iconv": "*",
         "ext-mbstring": "*",
         "ext-zip": "*",
-        "nategood/httpful": "0.2.20"
+        "nategood/httpful": "^0.3.2"
     },
     "license": "MIT",
     "authors": [
         {
-            "name": "Arjan Vlek",
-            "email": "arjan.vlek.dev@gmail.com"
+            "name": "Adhiraj Singh Chauhan",
+            "email": "adhirajsinghchauhan@gmail.com"
         }
     ]
 }

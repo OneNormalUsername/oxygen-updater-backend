@@ -11,6 +11,7 @@ on:
     - .well-known/assetlinks.json
     - browserconfig.xml
     - favicon.ico
+    - composer.json
     - manifest.json
     - app-ads.txt
     - robots.txt
@@ -37,7 +38,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Install dependencies using Composer
-      run: composer install --prefer-dist --no-progress --no-suggest
+      run: composer install --prefer-dist --no-progress
 
     - name: Bundle relevant files into gzipped tar
       # create a gzipped tar which preserves file permissions
