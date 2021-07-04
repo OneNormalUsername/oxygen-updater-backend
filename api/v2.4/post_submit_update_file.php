@@ -85,44 +85,41 @@ if ($timesSubmittedBefore == 0) {
 
     // If the never-submitted-before file is a valid OxygenOS file, notify the #contributors Discord channel.
     // We also do this for already-matched files, because otherwise files submitted after the update was initially added (e.g. older incremental packages) are missed.
-    if ($validFilename) {
-        include '../shared/webhook.php';
+    include '../shared/webhook.php';
 
-        // Message author and action URL not available on GitHub.
-        $authorName = getenv('SUBMITTED_UPDATE_FILE_WEBHOOK_AUTHOR_NAME');
-        $messageActionUrl = getenv('SUBMITTED_UPDATE_FILE_WEBHOOK_ACTION_URL');
+    // Message author and action URL not available on GitHub.
+    $authorName = getenv('SUBMITTED_UPDATE_FILE_WEBHOOK_AUTHOR_NAME');
+    $messageActionUrl = getenv('SUBMITTED_UPDATE_FILE_WEBHOOK_ACTION_URL');
 
-        $webhookField1 = make_webhook_field(
-            'Probably EU Build?',
-            $isEuBuild ? 'Yes' : 'No',
-            true
-        );
+    $webhookField1 = make_webhook_field(
+        'Probably EU Build?',
+        $isEuBuild ? 'Yes' : 'No',
+        true
+    );
 
-        $prefix = $isEuBuild ? 'This was submitted from a device that ran an EU build.' : '';
+    $prefix = $isEuBuild ? 'This was submitted from a device that ran an EU build.' : '';
 
-        $webhookEmbed = make_webhook_embed(
-            make_webhook_author(),
-            'New OTA filename submitted',
-            $messageActionUrl,
-            "$prefix
+    $webhookEmbed = make_webhook_embed(
+        make_webhook_author(),
+        'New OTA filename submitted',
+        $messageActionUrl,
+        "$prefix
 ```yaml
 $filename
 ```",
-            make_webhook_footer($authorName),
-            'https://cdn1.iconfinder.com/data/icons/finance-and-taxation/64/submit-document-file-send-512.png',
-            '4caf50',
-            $webhookField1
-        );
+        make_webhook_footer($authorName),
+        'https://cdn1.iconfinder.com/data/icons/finance-and-taxation/64/submit-document-file-send-512.png',
+        '4caf50',
+        $webhookField1
+    );
 
-        // webhook URL not available on GitHub to prevent abuse
-        $webhookUrl = getenv('SUBMITTED_UPDATE_FILE_WEBHOOK_URL');
-        make_webhook_call(
-            $webhookUrl,
-            null,
-            $webhookEmbed
-        );
-    }
-
+    // webhook URL not available on GitHub to prevent abuse
+    $webhookUrl = getenv('SUBMITTED_UPDATE_FILE_WEBHOOK_URL');
+    make_webhook_call(
+        $webhookUrl,
+        null,
+        $webhookEmbed
+    );
 } else {
     // Else, increment the submit count of the existing entry.
     $query = $database->prepare("UPDATE submitted_update_file SET times_submitted = times_submitted + 1, ota_version_number = :ota_version_number where `name` = :filename");
@@ -132,8 +129,8 @@ $query->bindParam(':filename', $filename);
 $query->bindParam(':ota_version_number', $alreadyExistingOtaVersion); // null when not exists
 $query->execute();
 
-$success = $query->rowCount() > 0 && $alreadyExistingOtaVersion == null && $validFilename;
-$errorMessage = $query->rowCount() === 0 ? 'Error storing submitted update file' : ($alreadyExistingOtaVersion != null ? 'E_FILE_ALREADY_IN_DB' : ($validFilename !== true ? 'E_FILE_INVALID' : null));
+$success = $query->rowCount() > 0 && $alreadyExistingOtaVersion == null;
+$errorMessage = $query->rowCount() === 0 ? 'Error storing submitted update file' : ($alreadyExistingOtaVersion != null ? 'E_FILE_ALREADY_IN_DB' : null);
 
 // Disconnect from the database
 unset($database);
