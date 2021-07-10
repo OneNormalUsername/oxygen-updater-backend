@@ -8,10 +8,10 @@ $purifier = initHtmlPurifier();
 $db = connectToDatabase();
 
 // Matches stable OOS update version numbers
-$stableRegex = '/(\d+\.\d+(\.\d+)*)$/';
+$stableRegex = '/((?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:\.(?:0|[1-9]\d*))?(?:\.[A-Z]{2}\d{2}[A-Z]{2})?)$/';
 
 // Matches Open Beta OOS update version numbers
-$betaRegex = '/(open|beta)_(\w+)$/';  // \w, because sometimes a date string is appended to the version number
+$betaRegex = '/(open|beta)_(\w+)$/i';  // \w, because sometimes a date string is appended to the version number
 
 /*
  * Determine current OS versions in the database.
@@ -40,7 +40,6 @@ foreach($devices as $device) {
         }
 
         $firstLineOfUpdateDescription = strtok($mostRecentUpdateData['description'], "\n");
-        $firstLineOfUpdateDescriptionLowercase = strtolower($firstLineOfUpdateDescription);
 
         $versionNumber = 'Oxygen OS System Update';
 
@@ -49,9 +48,9 @@ foreach($devices as $device) {
             $versionNumber = 'V. ' . $mostRecentUpdateData['version_number'];
         } else {
             $regexMatches = array();
-            if (preg_match($betaRegex, $firstLineOfUpdateDescriptionLowercase, $regexMatches) === 1) {
+            if (preg_match($betaRegex, $firstLineOfUpdateDescription, $regexMatches) === 1) {
                 $versionNumber = 'Open Beta ' . $regexMatches[2];
-            } else if (preg_match($stableRegex, $firstLineOfUpdateDescriptionLowercase, $regexMatches) === 1) {
+            } else if (preg_match($stableRegex, $firstLineOfUpdateDescription, $regexMatches) === 1) {
                 $versionNumber = $regexMatches[0];
             } else {
                 $versionNumber = str_replace('#', '', $firstLineOfUpdateDescription);
